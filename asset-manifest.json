@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/xamichee/ToDo/static/css/main.76bdf541.chunk.css",
-    "main.js": "/xamichee/ToDo/static/js/main.a67482e8.chunk.js",
-    "main.js.map": "/xamichee/ToDo/static/js/main.a67482e8.chunk.js.map",
-    "runtime-main.js": "/xamichee/ToDo/static/js/runtime-main.782520f2.js",
-    "runtime-main.js.map": "/xamichee/ToDo/static/js/runtime-main.782520f2.js.map",
-    "static/js/2.47f1af55.chunk.js": "/xamichee/ToDo/static/js/2.47f1af55.chunk.js",
-    "static/js/2.47f1af55.chunk.js.map": "/xamichee/ToDo/static/js/2.47f1af55.chunk.js.map",
-    "index.html": "/xamichee/ToDo/index.html",
-    "static/css/main.76bdf541.chunk.css.map": "/xamichee/ToDo/static/css/main.76bdf541.chunk.css.map",
-    "static/js/2.47f1af55.chunk.js.LICENSE.txt": "/xamichee/ToDo/static/js/2.47f1af55.chunk.js.LICENSE.txt"
+    "main.css": "/ToDo/static/css/main.76bdf541.chunk.css",
+    "main.js": "/ToDo/static/js/main.a67482e8.chunk.js",
+    "main.js.map": "/ToDo/static/js/main.a67482e8.chunk.js.map",
+    "runtime-main.js": "/ToDo/static/js/runtime-main.42c8c991.js",
+    "runtime-main.js.map": "/ToDo/static/js/runtime-main.42c8c991.js.map",
+    "static/js/2.47f1af55.chunk.js": "/ToDo/static/js/2.47f1af55.chunk.js",
+    "static/js/2.47f1af55.chunk.js.map": "/ToDo/static/js/2.47f1af55.chunk.js.map",
+    "index.html": "/ToDo/index.html",
+    "static/css/main.76bdf541.chunk.css.map": "/ToDo/static/css/main.76bdf541.chunk.css.map",
+    "static/js/2.47f1af55.chunk.js.LICENSE.txt": "/ToDo/static/js/2.47f1af55.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.782520f2.js",
+    "static/js/runtime-main.42c8c991.js",
     "static/js/2.47f1af55.chunk.js",
     "static/css/main.76bdf541.chunk.css",
     "static/js/main.a67482e8.chunk.js"
