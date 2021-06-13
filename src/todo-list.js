@@ -1,22 +1,20 @@
-import React from "react";
+import React, {Component} from "react";
 import './todo-list.css';
 import TodoListItem from "./todo-list-item";
 
-const TodoList = (props) => {
+export default class TodoList extends Component {
+
+  render() {
+    const {quests, onDelete} = this.props;
+
     return (
       <ul className='todo-list'>
-        { props.quests.map(elem => {
-          return (
-            <li key={elem.id} className={elem.className}>
-              <TodoListItem quest={elem} />
-              {elem.className === 'editing' ? <input type="text" className="edit" value="Editing task" /> : null}
-            </li>
-          )}
-        )}
+        {quests.map(elem => <TodoListItem
+          quest={elem}
+          onDelete={() => onDelete(elem.id)}/>)}
       </ul>
     )
   }
-;
+}
 
-export default TodoList;
 
