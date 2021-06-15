@@ -10,21 +10,17 @@ export default class Footer extends Component {
     {id: 3, name: 'Completed', className: ''},
   ]
 
-  // onFilter = (e) => {
-  //   console.dir(e.target.textContent)
-  // }
-
   render () {
-    const {onFilter} = this.props;
+    const {onFilter, onClearComplete, left} = this.props;
     return (
       <footer className="footer">
-        <span className="todo-count">1 items left</span>
+        <span className="todo-count">{left} items left</span>
         <ul className="filters">
           {this.filters.map(elem => {
             return <TasksFilter elem={elem} onFilter={onFilter}/>
           })}
         </ul>
-        <button className="clear-completed">Clear completed</button>
+        <button className="clear-completed" onClick={onClearComplete}>Clear completed</button>
       </footer>
     )
   }

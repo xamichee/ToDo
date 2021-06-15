@@ -22,8 +22,8 @@ class App extends Component {
 
   onCheckClick = (id) => {
     const idx = this.state.quests.findIndex((el) => el.id === id);
-    const newItem = Object.assign({}, this.state.quests[idx]);
-    newItem.done = !newItem.done;
+    const newItem = {...this.state.quests[idx], done: !this.state.quests[idx].done}
+
     this.setState(({quests}) => {
       return {
         quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
@@ -31,18 +31,18 @@ class App extends Component {
     });
   }
 
-  createItem = (title, className = '') => {
+  createItem = (title) => {
     return {
       id: this.maxId++,
       done: false,
       title: title,
-      className: className,
+      className: '',
       date: formatDistanceToNow(Date.now())
     };
   }
 
-  addItem = (title, className) => {
-    const newItem = this.createItem(title, className);
+  addItem = (title) => {
+    const newItem = this.createItem(title);
     this.setState(({quests}) => {
       return {
         quests: [newItem, ...quests]
@@ -73,27 +73,50 @@ class App extends Component {
     })
   }
 
-  // onFilter = (e) => {
-  //   let all = [...this.state.quests];
-  //   console.log(all);
-  //   this.setState(({quests}) => {
-  //     switch (e.target.textContent) {
-  //       case 'All': if (all) return {
-  //           quests: [...all]
-  //       }
-  //       case 'Completed': return {
-  //         quests: quests.filter(elem => elem.done)
-  //       }
-  //       case 'Active': return {
-  //         quests: quests.filter(elem => !elem.done)
-  //       }
-  //     }
-  //
-  //   })
-  //
-  // }
+  onFilter = (e) => {
+
+    this.setState(({quests}) => {
+      // eslint-disable-next-line default-case
+      switch (e.target.textContent) {
+        case 'All': return {
+          quests: quests.map(elem => {
+            elem.className = '';
+            return elem;
+          })
+        }
+        case 'Completed': return {
+          quests: quests.map(elem => {
+            if (!elem.done) elem.className = 'hidden';
+            else elem.className = '';
+            return elem;
+          })
+        }
+        case 'Active': return {
+          quests: quests.map(elem => {
+            if (elem.done) elem.className = 'hidden';
+            else elem.className = '';
+            return elem;
+          })
+        }
+      }
+
+    })
+
+  }
+
+  onClearComplete = () => {
+    this.setState(({quests}) => {
+      return {
+        quests: quests.filter(elem => !elem.done)
+      }
+    })
+}
+
+
 
   render() {
+    let left = this.state.quests.filter(elem => !elem.done).length;
+
     return (
       <section className='todoapp'>
         <Header addItem={this.addItem}/>
@@ -104,7 +127,10 @@ class App extends Component {
             onEdit={this.editItem}
             onCheckClick={this.onCheckClick}
             />
-          <Footer />
+          <Footer
+            onFilter={this.onFilter}
+            onClearComplete={this.onClearComplete}
+            left={left}/>
         </section>
       </section>
     )

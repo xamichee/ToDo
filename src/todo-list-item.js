@@ -17,7 +17,7 @@ export default class TodoListItem extends Component {
     // const {done} = this.state;
 
     if (done) {
-      className += 'completed'
+      className += ' completed'
     }
 
     return (
