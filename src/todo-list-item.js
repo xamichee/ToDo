@@ -4,21 +4,17 @@ import './todo-list-item.css';
 
 export default class TodoListItem extends Component {
 
-  state = {
-    done: false
-  };
-
-  onCheckClick = () => {
-    this.setState(({done}) => {
-      return {
-        done: !done
-      }
-    });
-  };
+  // state = {
+  //   done: false
+  // };
+  //
+  // onCheckClick = () => {
+  //   console.log(this.props.quest.done)
+  // };
 
   render() {
-    let {title, id, className} = this.props.quest;
-    const {done} = this.state;
+    let {title, id, className, done, date} = this.props.quest;
+    // const {done} = this.state;
 
     if (done) {
       className += 'completed'
@@ -27,12 +23,15 @@ export default class TodoListItem extends Component {
     return (
       <li key={id} className={className}>
         <div className="view">
-          <input className="toggle" type="checkbox" onClick={this.onCheckClick}/>
+          <input className="toggle" type="checkbox"
+                 checked={(done) ? true : false}
+                 onChange={this.props.onCheckClick} />
           <label>
             <span className="description">{title}</span>
-            <span className="created">created 17 seconds ago</span>
+            <span className="created">{date}</span>
           </label>
-          <button className="icon icon-edit"/>
+          <button
+            className="icon icon-edit"/>
           <button
             className="icon icon-destroy"
             onClick={this.props.onDelete}/>

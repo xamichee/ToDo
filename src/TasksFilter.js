@@ -4,11 +4,13 @@ import './TasksFilter.css'
 export default class TasksFilter extends Component {
 
   render() {
-    const {elem} = this.props;
+    const {elem, onFilter} = this.props;
 
     return (
       <li key={elem.id}>
-        <button className={elem.className}>{elem.name}</button>
+        <button
+          className={elem.className}
+          onClick={onFilter}>{elem.name}</button>
       </li>
     );
   }
