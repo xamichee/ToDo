@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import ReactDom from 'react-dom';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 import './style.css';
 
@@ -14,9 +13,9 @@ class App extends Component {
 
   state = {
     quests: [
-      {id: 1, done: false, title: 'Заработать денег', className: '', date: `${formatDistanceToNow(new Date(2021, 5, 6))}`,},
-      {id: 2, done: false, title: 'Заплатить налоги', className: '', date: `${formatDistanceToNow(new Date(2021, 5, 12))}`,},
-      {id: 3, done: false, title: 'Спать спокойно', className: '', date: `${formatDistanceToNow(Date.now())}`,},
+      {id: 1, done: false, title: 'Заработать денег', className: '', date: new Date(2021, 5, 6),},
+      {id: 2, done: false, title: 'Заплатить налоги', className: '', date: new Date(2021, 5, 12),},
+      {id: 3, done: false, title: 'Спать спокойно', className: '', date: Date.now(),},
     ]
   }
 
@@ -37,7 +36,7 @@ class App extends Component {
       done: false,
       title: title,
       className: '',
-      date: formatDistanceToNow(Date.now())
+      date: Date.now()
     };
   }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './header.css';
 
-class Header extends Component {
+export default class Header extends Component {
 
   state = {
     label: ''
@@ -41,6 +41,3 @@ class Header extends Component {
   }
 
 };
-
-export default Header;
-

@@ -1,43 +1,34 @@
-import React, {Component} from "react";
+import React from "react";
 import './todo-list-item.css';
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
+function TodoListItem(props) {
 
-export default class TodoListItem extends Component {
+  const {title, id, done, date } = props.quest;
+  let { className } = props.quest;
+  const {onCheckClick, onDelete} = props;
 
-  // state = {
-  //   done: false
-  // };
-  //
-  // onCheckClick = () => {
-  //   console.log(this.props.quest.done)
-  // };
+  if (done) className += ' completed';
 
-  render() {
-    let {title, id, className, done, date} = this.props.quest;
-    // const {done} = this.state;
+  return (
+    <li key={id} className={className}>
+      <div className="view">
+        <input className="toggle" type="checkbox"
+               checked={!!done}
+               onChange={onCheckClick}/>
+        <label>
+          <span className="description">{title}</span>
+          <span className="created">{formatDistanceToNow(date)}</span>
+        </label>
+        <button
+          className="icon icon-edit"/>
+        <button
+          className="icon icon-destroy"
+          onClick={onDelete}/>
+      </div>
+      {className === 'editing' ? <input type="text" className="edit" value="Editing task"/> : null}
+    </li>
+  );
+}
 
-    if (done) {
-      className += ' completed'
-    }
-
-    return (
-      <li key={id} className={className}>
-        <div className="view">
-          <input className="toggle" type="checkbox"
-                 checked={(done) ? true : false}
-                 onChange={this.props.onCheckClick} />
-          <label>
-            <span className="description">{title}</span>
-            <span className="created">{date}</span>
-          </label>
-          <button
-            className="icon icon-edit"/>
-          <button
-            className="icon icon-destroy"
-            onClick={this.props.onDelete}/>
-        </div>
-        {className === 'editing' ? <input type="text" className="edit" value="Editing task"/> : null}
-      </li>
-    );
-  }
-};
+export default TodoListItem;
