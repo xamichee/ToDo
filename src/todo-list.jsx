@@ -1,8 +1,22 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './todo-list.css';
 import TodoListItem from "./todo-list-item";
 
 function TodoList(props) {
+  TodoList.defaultProps = {
+    onDelete: () => {},
+    onEdit: () => {},
+    onCheckClick: () => {},
+  }
+
+  TodoList.propTypes = {
+    quests: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onDelete: PropTypes.func,
+    onEdit: PropTypes.func,
+    onCheckClick: PropTypes.func,
+  }
+
   const {quests, onDelete, onEdit, onCheckClick} = props;
 
   return (

@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import './header.css';
 
 export default class Header extends Component {
+
+  static defaultProps = {
+    addItem: () => alert('Ошибка, операция не может быть выполнена'),
+  };
+
+  static propTypes = {
+    addItem: PropTypes.func
+  }
 
   state = {
     label: ''
@@ -39,5 +48,4 @@ export default class Header extends Component {
       </header>
     );
   }
-
 };

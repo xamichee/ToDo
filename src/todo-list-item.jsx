@@ -1,8 +1,19 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './todo-list-item.css';
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 function TodoListItem(props) {
+  TodoListItem.defaultProps = {
+    onCheckClick: () => {},
+    onDelete: () => {}
+  }
+
+  TodoListItem.propTypes = {
+    quest: PropTypes.object.isRequired,
+    onCheckClick: PropTypes.func,
+    onDelete: PropTypes.func,
+  }
 
   const {title, id, done, date } = props.quest;
   let { className } = props.quest;

@@ -22,7 +22,6 @@ class App extends Component {
   onCheckClick = (id) => {
     const idx = this.state.quests.findIndex((el) => el.id === id);
     const newItem = {...this.state.quests[idx], done: !this.state.quests[idx].done}
-
     this.setState(({quests}) => {
       return {
         quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
@@ -59,13 +58,10 @@ class App extends Component {
   };
 
   editItem = (id) => {
-
     this.setState(({quests}) => {
-
       const idx = quests.findIndex((el) => el.id === id);
       const title = quests[idx].title;
       const newItem = this.createItem(title, 'editing');
-
       return {
         quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
       }
@@ -73,7 +69,6 @@ class App extends Component {
   }
 
   onFilter = (e) => {
-
     this.setState(({quests}) => {
       // eslint-disable-next-line default-case
       switch (e.target.textContent) {
@@ -98,9 +93,7 @@ class App extends Component {
           })
         }
       }
-
     })
-
   }
 
   onClearComplete = () => {
@@ -110,8 +103,6 @@ class App extends Component {
       }
     })
 }
-
-
 
   render() {
     let left = this.state.quests.filter(elem => !elem.done).length;
