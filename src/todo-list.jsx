@@ -8,6 +8,7 @@ function TodoList(props) {
     onDelete: () => {},
     onEdit: () => {},
     onCheckClick: () => {},
+    onEditSubmit: () => {},
   }
 
   TodoList.propTypes = {
@@ -15,17 +16,19 @@ function TodoList(props) {
     onDelete: PropTypes.func,
     onEdit: PropTypes.func,
     onCheckClick: PropTypes.func,
+    onEditSubmit: PropTypes.func,
   }
 
-  const {quests, onDelete, onEdit, onCheckClick} = props;
+  const {quests, onDelete, onEdit, onCheckClick, onEditSubmit} = props;
 
   return (
     <ul className='todo-list'>
       {quests.map(elem => <TodoListItem
-        quest={elem}
-        onDelete={() => onDelete(elem.id)}
-        onEdit={() => onEdit(elem.id)}
-        onCheckClick={() => onCheckClick(elem.id)}
+        quest = {elem}
+        onDelete = {() => onDelete(elem.id)}
+        onEdit = {() => onEdit(elem.id)}
+        onCheckClick = {() => onCheckClick(elem.id)}
+        onEditSubmit = {onEditSubmit}
       />)}
     </ul>
   )

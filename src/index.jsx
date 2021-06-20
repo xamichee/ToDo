@@ -29,7 +29,7 @@ class App extends Component {
     });
   }
 
-  createItem = (title) => {
+  createItem = (title, className = '') => {
     return {
       id: this.maxId++,
       done: false,
@@ -58,12 +58,31 @@ class App extends Component {
   };
 
   editItem = (id) => {
+
     this.setState(({quests}) => {
       const idx = quests.findIndex((el) => el.id === id);
-      const title = quests[idx].title;
-      const newItem = this.createItem(title, 'editing');
+      const newItem = {...quests[idx], className: 'editing'};
+
       return {
         quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
+      }
+    })
+  }
+
+  onEditSubmit = (id, value) => {
+    this.setState(({quests}) => {
+      const idx = quests.findIndex((el) => el.id === id);
+      if (value) {
+        const oldItem = {...quests[idx]};
+        const newItem = {...quests[idx], title: value, className: ''};
+        return {
+          quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
+        }
+      } else {
+        const oldItem = {...quests[idx], className: ''};
+        return {
+          quests: [...quests.slice(0, idx), oldItem, ...quests.slice(idx + 1)]
+        }
       }
     })
   }
@@ -72,26 +91,29 @@ class App extends Component {
     this.setState(({quests}) => {
       // eslint-disable-next-line default-case
       switch (e.target.textContent) {
-        case 'All': return {
-          quests: quests.map(elem => {
-            elem.className = '';
-            return elem;
-          })
-        }
-        case 'Completed': return {
-          quests: quests.map(elem => {
-            if (!elem.done) elem.className = 'hidden';
-            else elem.className = '';
-            return elem;
-          })
-        }
-        case 'Active': return {
-          quests: quests.map(elem => {
-            if (elem.done) elem.className = 'hidden';
-            else elem.className = '';
-            return elem;
-          })
-        }
+        case 'All':
+          return {
+            quests: quests.map(elem => {
+              elem.className = '';
+              return elem;
+            })
+          }
+        case 'Completed':
+          return {
+            quests: quests.map(elem => {
+              if (!elem.done) elem.className = 'hidden';
+              else elem.className = '';
+              return elem;
+            })
+          }
+        case 'Active':
+          return {
+            quests: quests.map(elem => {
+              if (elem.done) elem.className = 'hidden';
+              else elem.className = '';
+              return elem;
+            })
+          }
       }
     })
   }
@@ -102,7 +124,7 @@ class App extends Component {
         quests: quests.filter(elem => !elem.done)
       }
     })
-}
+  }
 
   render() {
     let left = this.state.quests.filter(elem => !elem.done).length;
@@ -116,7 +138,8 @@ class App extends Component {
             onDelete={this.deleteItem}
             onEdit={this.editItem}
             onCheckClick={this.onCheckClick}
-            />
+            onEditSubmit={this.onEditSubmit}
+          />
           <Footer
             onFilter={this.onFilter}
             onClearComplete={this.onClearComplete}

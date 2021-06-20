@@ -15,13 +15,12 @@ function Footer(props) {
   Footer.defaultProps = {
     onFilter: () => {},
     onClearComplete: () => {},
-    left: () => {}
   }
 
   Footer.propTypes = {
     onFilter: PropTypes.func,
     onClearComplete: PropTypes.func,
-    left: PropTypes.func
+    left: PropTypes.number
   }
 
     return (
