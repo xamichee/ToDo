@@ -16,6 +16,12 @@ class App extends Component {
       {id: 1, done: false, title: 'Заработать денег', className: '', date: new Date(2021, 5, 6),},
       {id: 2, done: false, title: 'Заплатить налоги', className: '', date: new Date(2021, 5, 12),},
       {id: 3, done: false, title: 'Спать спокойно', className: '', date: Date.now(),},
+    ],
+
+    filters: [
+      {id: 1, name: 'All', className: 'selected'},
+      {id: 2, name: 'Active', className: ''},
+      {id: 3, name: 'Completed', className: ''},
     ]
   }
 
@@ -88,13 +94,17 @@ class App extends Component {
   }
 
   onFilter = (e) => {
-    this.setState(({quests}) => {
+    this.setState(({quests, filters}) => {
       // eslint-disable-next-line default-case
       switch (e.target.textContent) {
         case 'All':
           return {
             quests: quests.map(elem => {
               elem.className = '';
+              return elem;
+            }),
+            filters: filters.map(elem => {
+              elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
               return elem;
             })
           }
@@ -104,6 +114,10 @@ class App extends Component {
               if (!elem.done) elem.className = 'hidden';
               else elem.className = '';
               return elem;
+            }),
+            filters: filters.map(elem => {
+              elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
+              return elem;
             })
           }
         case 'Active':
@@ -111,6 +125,10 @@ class App extends Component {
             quests: quests.map(elem => {
               if (elem.done) elem.className = 'hidden';
               else elem.className = '';
+              return elem;
+            }),
+            filters: filters.map(elem => {
+              elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
               return elem;
             })
           }
@@ -143,7 +161,8 @@ class App extends Component {
           <Footer
             onFilter={this.onFilter}
             onClearComplete={this.onClearComplete}
-            left={left}/>
+            left={left}
+            filters={this.state.filters}/>
         </section>
       </section>
     )
