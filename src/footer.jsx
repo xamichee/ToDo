@@ -14,22 +14,21 @@ function Footer(props) {
   Footer.propTypes = {
     onFilter: PropTypes.func,
     onClearComplete: PropTypes.func,
-    left: PropTypes.number,
-    filters: PropTypes.arrayOf(PropTypes.object)
+    left: PropTypes.number.isRequired,
+    filters: PropTypes.arrayOf(PropTypes.object).isRequired
   }
 
     return (
       <footer className="footer">
         <span className="todo-count">{left} items left</span>
         <ul className="filters">
-          {filters.map(elem => {
-            return <TasksFilter
+          {filters.map(elem => <TasksFilter
               elem={elem}
               onFilter={onFilter}
-            />
-          })}
+            />)}
         </ul>
         <button
+          type="button"
           className="clear-completed"
           onClick={onClearComplete}>Clear completed
         </button>

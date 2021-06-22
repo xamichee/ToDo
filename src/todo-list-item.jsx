@@ -13,7 +13,13 @@ export default class TodoListItem extends Component {
   }
 
   static propTypes = {
-    quest: PropTypes.object.isRequired,
+    quest: PropTypes.shape({
+      id: PropTypes.number,
+      done: PropTypes.bool,
+      title: PropTypes.string,
+      className: PropTypes.string,
+      date: PropTypes.number
+    }).isRequired,
     onCheckClick: PropTypes.func,
     onDelete: PropTypes.func,
     onEdit: PropTypes.func,
@@ -24,16 +30,17 @@ export default class TodoListItem extends Component {
     label: ''
   }
 
-  onLabelChange = (e) => {
+  onLabelChange = (ev) => {
     this.setState({
-      label: e.target.value
+      label: ev.target.value
     })
   }
 
   render () {
-  const {title, id, done, date } = this.props.quest;
-  let { className } = this.props.quest;
-  const {onCheckClick, onDelete, onEdit, onEditSubmit} = this.props;
+  const {onCheckClick, onDelete, onEdit, onEditSubmit, quest} = this.props;
+  const {title, id, done, date } = quest;
+  let { className } = quest;
+  const { label } = this.state;
 
   if (done) className += ' completed';
 
@@ -48,15 +55,19 @@ export default class TodoListItem extends Component {
           <span className="created">{formatDistanceToNow(date)}</span>
         </label>
         <button
+          aria-label="edit"
+          type="button"
           className="icon icon-edit"
           onClick={onEdit} />
         <button
+          aria-label="delete"
+          type="button"
           className="icon icon-destroy"
           onClick={onDelete} />
       </div>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        onEditSubmit(id, this.state.label);
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        onEditSubmit(id, label);
       }}>
         <input
           type="text"

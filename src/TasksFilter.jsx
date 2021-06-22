@@ -10,13 +10,17 @@ function TasksFilter(props) {
   }
 
   TasksFilter.propTypes = {
-    elem: PropTypes.object.isRequired,
+    elem: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      className: PropTypes.string
+      }).isRequired,
     onFilter: PropTypes.func
   }
 
   return (
     <li key={elem.id}>
-      <button className={elem.className} onClick={onFilter} >
+      <button type="button" className={elem.className} onClick={onFilter} >
         {elem.name}
       </button>
     </li>

@@ -5,7 +5,7 @@ import './header.css';
 export default class Header extends Component {
 
   static defaultProps = {
-    addItem: () => alert('Ошибка, операция не может быть выполнена'),
+    addItem: () => {},
   };
 
   static propTypes = {
@@ -16,21 +16,22 @@ export default class Header extends Component {
     label: ''
   }
 
-  onLabelChange = (e) => {
+  onLabelChange = (err) => {
     this.setState({
-      label: e.target.value
+      label: err.target.value
     })
   }
 
   render () {
-    const {addItem} = this.props
+    const {addItem} = this.props;
+    const {label} = this.state;
 
     return (
       <header className="header">
         <h1>todos</h1>
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          addItem(this.state.label);
+        <form onSubmit={(err) => {
+          err.preventDefault();
+          addItem(label);
           this.setState({
             label: ''
           })
@@ -40,9 +41,8 @@ export default class Header extends Component {
             type='text'
             className="new-todo"
             placeholder="What needs to be done?"
-            autoFocus
             onChange={this.onLabelChange}
-            value={this.state.label}
+            value={label}
           />
         </form>
       </header>

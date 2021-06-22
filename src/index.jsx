@@ -26,32 +26,30 @@ class App extends Component {
   }
 
   onCheckClick = (id) => {
-    const idx = this.state.quests.findIndex((el) => el.id === id);
-    const newItem = {...this.state.quests[idx], done: !this.state.quests[idx].done}
-    this.setState(({quests}) => {
-      return {
+    const {quests} = this.state
+    const idx = quests.findIndex((el) => el.id === id);
+    const newItem = {...quests[idx], done: !quests[idx].done}
+    this.setState(() => ({
         quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
-      }
-    });
+      }));
   }
 
-  createItem = (title, className = '') => {
-    return {
-      id: this.maxId++,
+  createItem = (title) => {
+    this.maxId += 1;
+    return ({
+      id: this.maxId,
       done: false,
-      title: title,
+      title,
       className: '',
       date: Date.now()
-    };
+    })
   }
 
   addItem = (title) => {
     const newItem = this.createItem(title);
-    this.setState(({quests}) => {
-      return {
+    this.setState(({quests}) => ({
         quests: [newItem, ...quests]
-      }
-    })
+      }))
   }
 
   deleteItem = (id) => {
@@ -79,63 +77,58 @@ class App extends Component {
     this.setState(({quests}) => {
       const idx = quests.findIndex((el) => el.id === id);
       if (value) {
-        const oldItem = {...quests[idx]};
         const newItem = {...quests[idx], title: value, className: ''};
         return {
           quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)]
         }
-      } else {
+      } 
         const oldItem = {...quests[idx], className: ''};
         return {
           quests: [...quests.slice(0, idx), oldItem, ...quests.slice(idx + 1)]
         }
-      }
+      
     })
   }
 
-  onFilter = (e) => {
-    this.setState(({quests, filters}) => {
-      return {
+  onFilter = (event) => {
+    this.setState(({quests, filters}) => ({
         quests: quests.map(elem => {
-          switch (e.target.textContent) {
+          switch (event.target.textContent) {
             case 'All':
-              elem.className = '';
-              return elem;
+              return {...elem, className: ''};
             case 'Completed':
-              if (!elem.done) elem.className = 'hidden';
-              else elem.className = '';
-              return elem;
+              if (!elem.done) return {...elem, className: 'hidden'};
+              return {...elem, className: ''};
             case 'Active':
-              if (elem.done) elem.className = 'hidden';
-              else elem.className = '';
-              return elem;
+              if (elem.done) return {...elem, className: 'hidden'};
+              return {...elem, className: ''};
+            default:
+              return null;
           }
         }),
-        filters: filters.map(elem => {
-          elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
-          return elem;
-        })
-      }
-    })
+        filters: filters.map(elem => (event.target.textContent === elem.name) ?
+          {...elem, className: 'selected'} :
+          {...elem, className: ''}
+        )
+      }))
   }
 
   onClearComplete = () => {
-    this.setState(({quests}) => {
-      return {
+    this.setState(({quests}) => ({
         quests: quests.filter(elem => !elem.done)
-      }
-    })
+      }))
   }
 
   render() {
-    let left = this.state.quests.filter(elem => !elem.done).length;
+    const {quests, filters} = this.state;
+    const left = quests.filter(elem => !elem.done).length;
 
     return (
       <section className='todoapp'>
         <Header addItem={this.addItem}/>
         <section className='main'>
           <TodoList
-            quests={this.state.quests}
+            quests={quests}
             onDelete={this.deleteItem}
             onEdit={this.editItem}
             onCheckClick={this.onCheckClick}
@@ -145,7 +138,7 @@ class App extends Component {
             onFilter={this.onFilter}
             onClearComplete={this.onClearComplete}
             left={left}
-            filters={this.state.filters}/>
+            filters={filters}/>
         </section>
       </section>
     )
