@@ -95,43 +95,26 @@ class App extends Component {
 
   onFilter = (e) => {
     this.setState(({quests, filters}) => {
-      // eslint-disable-next-line default-case
-      switch (e.target.textContent) {
-        case 'All':
-          return {
-            quests: quests.map(elem => {
+      return {
+        quests: quests.map(elem => {
+          switch (e.target.textContent) {
+            case 'All':
               elem.className = '';
               return elem;
-            }),
-            filters: filters.map(elem => {
-              elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
-              return elem;
-            })
-          }
-        case 'Completed':
-          return {
-            quests: quests.map(elem => {
+            case 'Completed':
               if (!elem.done) elem.className = 'hidden';
               else elem.className = '';
               return elem;
-            }),
-            filters: filters.map(elem => {
-              elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
-              return elem;
-            })
-          }
-        case 'Active':
-          return {
-            quests: quests.map(elem => {
+            case 'Active':
               if (elem.done) elem.className = 'hidden';
               else elem.className = '';
               return elem;
-            }),
-            filters: filters.map(elem => {
-              elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
-              return elem;
-            })
           }
+        }),
+        filters: filters.map(elem => {
+          elem.className = (e.target.textContent === elem.name) ? 'selected' : '';
+          return elem;
+        })
       }
     })
   }

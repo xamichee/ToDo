@@ -4,12 +4,6 @@ import TasksFilter from "./TasksFilter";
 import './footer.css'
 
 function Footer(props) {
-  // const filters = [
-  //   {id: 1, name: 'All', className: ''},
-  //   {id: 2, name: 'Active', className: ''},
-  //   {id: 3, name: 'Completed', className: ''},
-  // ]
-
   const {onFilter, onClearComplete, left, filters} = props;
 
   Footer.defaultProps = {
@@ -20,7 +14,8 @@ function Footer(props) {
   Footer.propTypes = {
     onFilter: PropTypes.func,
     onClearComplete: PropTypes.func,
-    left: PropTypes.number
+    left: PropTypes.number,
+    filters: PropTypes.arrayOf(PropTypes.object)
   }
 
     return (
