@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import './todo-list-item.css';
+import './TodoListItem.css';
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import classNames from 'classnames';
 
 export default class TodoListItem extends Component {
 
@@ -42,7 +43,9 @@ export default class TodoListItem extends Component {
   let { className } = quest;
   const { label } = this.state;
 
-  if (done) className += ' completed';
+  className = classNames(className, {
+    "completed": done
+  })
 
   return (
     <li key={id} className={className}>

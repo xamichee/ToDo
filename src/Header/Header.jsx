@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './header.css';
+import './Header.css';
 
 export default class Header extends Component {
 

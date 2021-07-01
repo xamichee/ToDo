@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import './todo-list.css';
-import TodoListItem from "./todo-list-item";
+import './TodoList.css';
+import TodoListItem from "../TodoListItem/TodoListItem";
 
 function TodoList(props) {
   TodoList.defaultProps = {
@@ -20,6 +20,10 @@ function TodoList(props) {
   }
 
   const {quests, onDelete, onEdit, onCheckClick, onEditSubmit} = props;
+
+  // function tick () {
+  //
+  // }
 
   return (
     <ul className='todo-list'>
