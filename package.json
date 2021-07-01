@@ -18,6 +18,7 @@
   "scripts": {
     "lint": "eslint ./src --ext .jsx",
     "lint:fix": "eslint ./src --ext .jsx --fix",
+    "format": "prettier  --write src/**/*.jsx",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
@@ -56,5 +57,17 @@
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.jsx": [
+      "npm run lint:fix",
+      "npm run format",
+      "git add"
+    ]
   }
 }
