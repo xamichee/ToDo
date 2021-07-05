@@ -18,7 +18,7 @@ export default class TodoListItem extends Component {
       done: PropTypes.bool,
       title: PropTypes.string,
       className: PropTypes.string,
-      date: PropTypes.number,
+      date: PropTypes.instanceOf(Date),
     }).isRequired,
     onCheckClick: PropTypes.func,
     onDelete: PropTypes.func,

@@ -21,10 +21,6 @@ function TodoList(props) {
 
   const { quests, onDelete, onEdit, onCheckClick, onEditSubmit } = props;
 
-  // function tick () {
-  //
-  // }
-
   return (
     <ul className="todo-list">
       {quests.map((elem) => (

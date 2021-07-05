@@ -11,8 +11,8 @@ export default class App extends Component {
 
   state = {
     quests: [
-      { id: 1, done: false, title: 'Заработать денег', className: '', date: new Date(2021, 5, 6) },
-      { id: 2, done: false, title: 'Заплатить налоги', className: '', date: new Date(2021, 5, 12) },
+      { id: 1, done: false, title: 'Заработать денег', className: '', date: Date.now() },
+      { id: 2, done: false, title: 'Заплатить налоги', className: '', date: Date.now() },
       { id: 3, done: false, title: 'Спать спокойно', className: '', date: Date.now() },
     ],
 
