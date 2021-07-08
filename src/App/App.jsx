@@ -1,27 +1,44 @@
 import React, { Component } from 'react';
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 import Header from '../Header/Header';
 import TodoList from '../TodoList/TodoList';
 import Footer from '../Footer/Footer';
 
 import './App.css';
+import initialState from './initialState'
+
 
 export default class App extends Component {
   maxId = 5;
 
-  state = {
-    quests: [
-      { id: 1, done: false, title: 'Заработать денег', className: '', date: Date.now() },
-      { id: 2, done: false, title: 'Заплатить налоги', className: '', date: Date.now() },
-      { id: 3, done: false, title: 'Спать спокойно', className: '', date: Date.now() },
-    ],
+  interval = null;
 
-    filters: [
-      { id: 1, name: 'All', className: 'selected' },
-      { id: 2, name: 'Active', className: '' },
-      { id: 3, name: 'Completed', className: '' },
-    ],
-  };
+  state = initialState;
+
+  componentDidMount() {
+    this.setState(({quests}) => ({
+      quests: quests.map( (elem) => ({...elem, created: formatDistanceToNow(elem.date, { addSuffix: true, includeSeconds: true })}
+      ))
+    }));
+
+    this.interval = setInterval(() => {
+      this.setState(({quests}) => ({
+        quests: quests.map( (elem) => ({...elem, created: formatDistanceToNow(elem.date, { addSuffix: true, includeSeconds: true })}
+        ))
+      }))
+    }, 5000)
+  }
+
+  componentDidUpdate() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.setState(({quests}) => ({
+        quests: quests.map( (elem) => ({...elem, created: formatDistanceToNow(elem.date, { addSuffix: true, includeSeconds: true })}
+        ))
+      }))
+    }, 5000)
+  }
 
   onCheckClick = (id) => {
     const { quests } = this.state;
@@ -38,8 +55,9 @@ export default class App extends Component {
       id: this.maxId,
       done: false,
       title,
-      className: '',
+      className: "",
       date: Date.now(),
+      created: formatDistanceToNow(Date.now(), { addSuffix: true, includeSeconds: true }),
     };
   };
 
@@ -62,7 +80,7 @@ export default class App extends Component {
   editItem = (id) => {
     this.setState(({ quests }) => {
       const idx = quests.findIndex((el) => el.id === id);
-      const newItem = { ...quests[idx], className: 'editing' };
+      const newItem = { ...quests[idx], className: "editing" };
 
       return {
         quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)],
@@ -74,12 +92,12 @@ export default class App extends Component {
     this.setState(({ quests }) => {
       const idx = quests.findIndex((el) => el.id === id);
       if (value) {
-        const newItem = { ...quests[idx], title: value, className: '' };
+        const newItem = { ...quests[idx], title: value, className: "" };
         return {
           quests: [...quests.slice(0, idx), newItem, ...quests.slice(idx + 1)],
         };
       }
-      const oldItem = { ...quests[idx], className: '' };
+      const oldItem = { ...quests[idx], className: "" };
       return {
         quests: [...quests.slice(0, idx), oldItem, ...quests.slice(idx + 1)],
       };
@@ -91,19 +109,19 @@ export default class App extends Component {
       quests: quests.map((elem) => {
         switch (event.target.textContent) {
           case 'All':
-            return { ...elem, className: '' };
+            return { ...elem, className: "" };
           case 'Completed':
-            if (!elem.done) return { ...elem, className: 'hidden' };
+            if (!elem.done) return { ...elem, className: "hidden" };
             return { ...elem, className: '' };
           case 'Active':
-            if (elem.done) return { ...elem, className: 'hidden' };
+            if (elem.done) return { ...elem, className: "hidden" };
             return { ...elem, className: '' };
           default:
             return null;
         }
       }),
       filters: filters.map((elem) =>
-        event.target.textContent === elem.name ? { ...elem, className: 'selected' } : { ...elem, className: '' }
+        event.target.textContent === elem.name ? { ...elem, className: "selected" } : { ...elem, className: "" }
       ),
     }));
   };
@@ -123,11 +141,11 @@ export default class App extends Component {
         <Header addItem={this.addItem} />
         <section className="main">
           <TodoList
-            quests={quests}
-            onDelete={this.deleteItem}
-            onEdit={this.editItem}
-            onCheckClick={this.onCheckClick}
-            onEditSubmit={this.onEditSubmit}
+              quests={quests}
+              onDelete={this.deleteItem}
+              onEdit={this.editItem}
+              onCheckClick={this.onCheckClick}
+              onEditSubmit={this.onEditSubmit}
           />
           <Footer onFilter={this.onFilter} onClearComplete={this.onClearComplete} left={left} filters={filters} />
         </section>

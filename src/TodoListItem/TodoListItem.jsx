@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './TodoListItem.css';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import classNames from 'classnames';
 
 export default class TodoListItem extends Component {
@@ -18,7 +17,7 @@ export default class TodoListItem extends Component {
       done: PropTypes.bool,
       title: PropTypes.string,
       className: PropTypes.string,
-      date: PropTypes.instanceOf(Date),
+      created: PropTypes.string,
     }).isRequired,
     onCheckClick: PropTypes.func,
     onDelete: PropTypes.func,
@@ -27,7 +26,7 @@ export default class TodoListItem extends Component {
   };
 
   state = {
-    label: '',
+    label: null,
   };
 
   onLabelChange = (ev) => {
@@ -38,7 +37,7 @@ export default class TodoListItem extends Component {
 
   render() {
     const { onCheckClick, onDelete, onEdit, onEditSubmit, quest } = this.props;
-    const { title, id, done, date } = quest;
+    const { title, id, done, created } = quest;
     let { className } = quest;
     const { label } = this.state;
 
@@ -52,7 +51,7 @@ export default class TodoListItem extends Component {
           <input className="toggle" type="checkbox" checked={!!done} onChange={onCheckClick} />
           <label>
             <span className="description">{title}</span>
-            <span className="created">{formatDistanceToNow(date)}</span>
+            <span className="created">{created}</span>
           </label>
           <button aria-label="edit" type="button" className="icon icon-edit" onClick={onEdit} />
           <button aria-label="delete" type="button" className="icon icon-destroy" onClick={onDelete} />
