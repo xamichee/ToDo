@@ -46,7 +46,7 @@ export default class TodoListItem extends Component {
     });
 
     return (
-      <li key={id} className={className}>
+      <li className={className}>
         <div className="view">
           <input className="toggle" type="checkbox" checked={!!done} onChange={onCheckClick} />
           <label>

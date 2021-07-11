@@ -30,14 +30,8 @@ export default class App extends Component {
     }, 5000)
   }
 
-  componentDidUpdate() {
+  componentWillUnmount() {
     clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      this.setState(({quests}) => ({
-        quests: quests.map( (elem) => ({...elem, created: formatDistanceToNow(elem.date, { addSuffix: true, includeSeconds: true })}
-        ))
-      }))
-    }, 5000)
   }
 
   onCheckClick = (id) => {

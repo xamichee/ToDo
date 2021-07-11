@@ -23,7 +23,7 @@ function Footer(props) {
       <span className="todo-count">{left} items left</span>
       <ul className="filters">
         {filters.map((elem) => (
-          <TasksFilter elem={elem} onFilter={onFilter} />
+          <TasksFilter key={elem.id} elem={elem} onFilter={onFilter} />
         ))}
       </ul>
       <button type="button" className="clear-completed" onClick={onClearComplete}>

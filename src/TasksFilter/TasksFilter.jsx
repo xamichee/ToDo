@@ -19,7 +19,7 @@ function TasksFilter(props) {
   };
 
   return (
-    <li key={elem.id}>
+    <li>
       <button type="button" className={elem.className} onClick={onFilter}>
         {elem.name}
       </button>

@@ -25,6 +25,7 @@ function TodoList(props) {
     <ul className="todo-list">
       {quests.map((elem) => (
         <TodoListItem
+          key={elem.id}
           quest={elem}
           onDelete={() => onDelete(elem.id)}
           onEdit={() => onEdit(elem.id)}
