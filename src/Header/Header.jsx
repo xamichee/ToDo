@@ -15,9 +15,9 @@ export default class Header extends Component {
     label: '',
   };
 
-  onLabelChange = (err) => {
+  onLabelChange = (ev) => {
     this.setState({
-      label: err.target.value,
+      label: ev.target.value,
     });
   };
 
@@ -29,8 +29,8 @@ export default class Header extends Component {
       <header className="header">
         <h1>todos</h1>
         <form
-          onSubmit={(err) => {
-            err.preventDefault();
+          onSubmit={(ev) => {
+            ev.preventDefault();
             addItem(label);
             this.setState({
               label: '',

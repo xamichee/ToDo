@@ -6,4 +6,3 @@ import './style.css';
 import App from './App/App';
 
 ReactDom.render(<App />, document.getElementById('root'));
-
