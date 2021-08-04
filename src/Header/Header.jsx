@@ -1,51 +1,41 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 
-export default class Header extends Component {
-  static defaultProps = {
+function Header(props) {
+  const { addItem } = props;
+  const [label, setLabel] = useState('');
+
+  Header.defaultProps = {
     addItem: () => {},
   };
 
-  static propTypes = {
+  Header.propTypes = {
     addItem: PropTypes.func,
-  };
-
-  state = {
-    label: '',
-  };
-
-  onLabelChange = (ev) => {
-    this.setState({
-      label: ev.target.value,
-    });
-  };
-
-  render() {
-    const { addItem } = this.props;
-    const { label } = this.state;
-
-    return (
-      <header className="header">
-        <h1>todos</h1>
-        <form
-          onSubmit={(ev) => {
-            ev.preventDefault();
-            addItem(label);
-            this.setState({
-              label: '',
-            });
-          }}
-        >
-          <input
-            type="text"
-            className="new-todo"
-            placeholder="What needs to be done?"
-            onChange={this.onLabelChange}
-            value={label}
-          />
-        </form>
-      </header>
-    );
   }
+
+  const onLabelChange = (ev) => setLabel(ev.target.value);
+
+  return (
+    <header className="header">
+      <h1>todos</h1>
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          addItem(label);
+          setLabel('' );
+        }}
+      >
+        <input
+          type="text"
+          className="new-todo"
+          placeholder="What needs to be done?"
+          onChange={onLabelChange}
+          value={label}
+        />
+      </form>
+    </header>
+  );
 }
+
+export default Header;
