@@ -9,7 +9,6 @@ function TodoListItem(props) {
   const {title, id, done, created} = quest;
 
   let {className} = quest;
-  // let inter = null;
 
   const [label, setLabel] = useState(title);
   const [timer, setTimer] = useState(0);
@@ -48,24 +47,6 @@ function TodoListItem(props) {
   };
 
   const onLabelChange = (ev) => setLabel(ev.target.value);
-
-  // const timeGo = (e) => {
-  //   console.log(e.target.name);
-  //   if (!inter) {
-  //     setTimerColor('green')
-  //     const timerFunc = () => {
-  //       setTimer(tmr => tmr + 1000);
-  //     }
-  //     inter = setInterval(timerFunc, 1000);
-  //     console.log(inter);
-  //   }
-  // };
-  //
-  // const timePause = (e) => {
-  //   console.log(e.target.name);
-  //   clearInterval(inter);
-  //   setTimerColor('black' );
-  // };
 
   const timeGo = () => {
     if (pause) {
