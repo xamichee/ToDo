@@ -62,6 +62,11 @@ export default function TodoListItem(props) {
     }
   };
 
+  const toggleCheck = () => {
+    timePause();
+    onCheckClick();
+  }
+
   useEffect(() => {
     let interval;
     if (!pause) {
@@ -79,10 +84,11 @@ export default function TodoListItem(props) {
     completed: done,
   });
 
+
   return (
     <li className={className}>
       <div className="view">
-        <input className="toggle" type="checkbox" checked={!!done} onChange={onCheckClick}/>
+        <input className="toggle" type="checkbox" checked={!!done} onChange={toggleCheck}/>
         <label>
           <span className={`title ${timerColor}`}>{title}</span>
           <span className="description timer">
