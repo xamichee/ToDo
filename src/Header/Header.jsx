@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 
-function Header(props) {
-  const { addItem } = props;
+export default function Header(props) {
+  const {addItem} = props;
   const [label, setLabel] = useState('');
 
   Header.defaultProps = {
-    addItem: () => {},
+    addItem: () => {
+    },
   };
 
   Header.propTypes = {
@@ -23,7 +24,7 @@ function Header(props) {
         onSubmit={(ev) => {
           ev.preventDefault();
           addItem(label);
-          setLabel('' );
+          setLabel('');
         }}
       >
         <input
@@ -36,6 +37,4 @@ function Header(props) {
       </form>
     </header>
   );
-}
-
-export default Header;
+};

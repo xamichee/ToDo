@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import './TodoList.css';
 import TodoListItem from '../TodoListItem/TodoListItem';
 
-function TodoList(props) {
+export default function TodoList(props) {
   TodoList.defaultProps = {
-    onDelete: () => {},
-    onEdit: () => {},
-    onCheckClick: () => {},
-    onEditSubmit: () => {},
+    onDelete: () => {
+    },
+    onEdit: () => {
+    },
+    onCheckClick: () => {
+    },
+    onEditSubmit: () => {
+    },
   };
 
   TodoList.propTypes = {
@@ -19,7 +23,7 @@ function TodoList(props) {
     onEditSubmit: PropTypes.func,
   };
 
-  const { quests, onDelete, onEdit, onCheckClick, onEditSubmit } = props;
+  const {quests, onDelete, onEdit, onCheckClick, onEditSubmit} = props;
 
   return (
     <ul className="todo-list">
@@ -35,6 +39,4 @@ function TodoList(props) {
       ))}
     </ul>
   );
-}
-
-export default TodoList;
+};
