@@ -84,7 +84,6 @@ export default function TodoListItem(props) {
     completed: done,
   });
 
-
   return (
     <li className={className}>
       <div className="view">

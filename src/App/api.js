@@ -54,22 +54,7 @@ export function onEditSubmit (id, value, callback) {
 }
 
 export function onFilter (event, callback1, callback2) {
-  callback1(Quests => (
-    Quests.map((elem) => {
-      switch (event.target.textContent) {
-        case 'All':
-          return {...elem, className: ''};
-        case 'Completed':
-          if (!elem.done) return {...elem, className: 'hidden'};
-          return {...elem, className: ''};
-        case 'Active':
-          if (elem.done) return {...elem, className: 'hidden'};
-          return {...elem, className: ''};
-        default:
-          return null;
-      }
-    })))
-
+  callback1(event.target.textContent);
   callback2(Filters => Filters.map((elem) =>
     event.target.textContent === elem.name ? { ...elem, className: 'selected' } : { ...elem, className: '' })
   );

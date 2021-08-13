@@ -12,6 +12,7 @@ import {onCheck, addItem, deleteItem, editItem, onEditSubmit, onFilter} from "./
 export default function App() {
   const [quests, setQuests] = useState(initialState.quests);
   const [filters, setFilters] = useState(initialState.filters);
+  const [activeFilter, setActiveFilter] = useState(initialState.activeFilter);
 
   useEffect(() => {
     setQuests((Quest) => Quest.map((elem) => ({
@@ -41,7 +42,7 @@ export default function App() {
 
   const onEditItemSubmit = (id, value) => onEditSubmit(id, value, setQuests)
 
-  const onItemsFilter = (event) => onFilter(event, setQuests, setFilters);
+  const onItemsFilter = (event) => onFilter(event, setActiveFilter, setFilters);
 
   const onClearComplete = () => {
     setQuests(Quests => Quests.filter((elem) => !elem.done))
@@ -49,12 +50,27 @@ export default function App() {
 
   const left = quests.filter((elem) => !elem.done).length;
 
+  const questsToRender = quests.map((elem) => {
+    switch (activeFilter) {
+      case 'All':
+        return {...elem, className: ''};
+      case 'Completed':
+        if (!elem.done) return {...elem, className: 'hidden'};
+        return {...elem, className: ''};
+      case 'Active':
+        if (elem.done) return {...elem, className: 'hidden'};
+        return {...elem, className: ''};
+      default:
+        return null;
+    }
+  });
+
   return (
     <section className="todoapp">
       <Header addItem={addTodoItem}/>
       <section className="main">
         <TodoList
-          quests={quests}
+          quests={questsToRender}
           onDelete={deleteTodoItem}
           onEdit={editTodoItem}
           onCheckClick={onCheckClick}

@@ -10,6 +10,8 @@ const initialState = {
     { id: 2, name: 'Active', className: '' },
     { id: 3, name: 'Completed', className: '' },
   ],
+
+  activeFilter: 'All'
 };
 
 export default initialState;
