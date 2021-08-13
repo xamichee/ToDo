@@ -50,10 +50,8 @@ export default function App() {
 
   const left = quests.filter((elem) => !elem.done).length;
 
-  const questsToRender = quests.map((elem) => {
+  const questsToRender = (activeFilter === 'All') ? quests : quests.map((elem) => {
     switch (activeFilter) {
-      case 'All':
-        return {...elem, className: ''};
       case 'Completed':
         if (!elem.done) return {...elem, className: 'hidden'};
         return {...elem, className: ''};
