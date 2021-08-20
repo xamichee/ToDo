@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Timer from "../Timer/Timer";
 import ItemCreated from "../ItemCreated/ItemCreated";
 
-export default function TodoListItem({onCheckClick, onDelete, onEdit, onEditSubmit, quest}) {
+export default function TodoListItem({ onDelete, onEdit, onEditSubmit, quest, onCheck }) {
 
   const {title, id, done, date} = quest;
 
@@ -21,28 +21,17 @@ export default function TodoListItem({onCheckClick, onDelete, onEdit, onEditSubm
       className: PropTypes.string,
       date: PropTypes.number,
     }).isRequired,
-    onCheckClick: PropTypes.func,
-    onDelete: PropTypes.func,
-    onEdit: PropTypes.func,
-    onEditSubmit: PropTypes.func,
+    onCheck: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    onEditSubmit: PropTypes.func.isRequired,
   }
-
-  TodoListItem.defaultProps = {
-    onCheckClick: () => {
-    },
-    onDelete: () => {
-    },
-    onEdit: () => {
-    },
-    onEditSubmit: () => {
-    },
-  };
 
   const onLabelChange = (ev) => setLabel(ev.target.value);
 
   const toggleCheck = () => {
     // timePause();
-    onCheckClick();
+    onCheck();
   }
 
   className = classNames(className, {

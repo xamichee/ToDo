@@ -6,18 +6,12 @@ import Footer from '../Footer/Footer';
 
 import './App.css';
 import {todos, filtersList} from '../InitialState/initialState';
-import {onCheck, deleteItem, editItem, onEditSubmit, onFilter} from "../Handlers/handlers";
+import { onEditSubmit, onFilter} from "../Handlers/handlers";
 
 export default function App() {
   const [quests, setQuests] = useState(todos);
   const [filters, setFilters] = useState(filtersList);
   const [activeFilter, setActiveFilter] = useState("All");
-
-  const onCheckClick = (id) => onCheck(id, quests, setQuests);
-
-  const deleteTodoItem = (id) => deleteItem(id, setQuests);
-
-  const editTodoItem = (id) => editItem(id, setQuests);
 
   const onEditItemSubmit = (id, value) => onEditSubmit(id, value, setQuests)
 
@@ -48,9 +42,7 @@ export default function App() {
       <section className="main">
         <TodoList
           quests={questsToRender}
-          onDelete={deleteTodoItem}
-          onEdit={editTodoItem}
-          onCheckClick={onCheckClick}
+          setQuests={setQuests}
           onEditSubmit={onEditItemSubmit}
         />
         <Footer onFilter={onItemsFilter} onClearComplete={onClearComplete} left={left} filters={filters}/>
