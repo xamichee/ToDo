@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {addItem} from "../Handlers/handlers";
 import './Header.css';
 
 export default function Header(props) {
-  const {addItem} = props;
+  const {setQuests} = props;
   const [label, setLabel] = useState('');
 
   Header.defaultProps = {
-    addItem: () => {
+    setQuests: () => {
     },
   };
 
   Header.propTypes = {
-    addItem: PropTypes.func,
+    setQuests: PropTypes.func,
   }
+
+  const addTodoItem = (title) => addItem(title, setQuests);
 
   const onLabelChange = (ev) => setLabel(ev.target.value);
 
@@ -23,7 +26,7 @@ export default function Header(props) {
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
-          addItem(label);
+          addTodoItem(label);
           setLabel('');
         }}
       >

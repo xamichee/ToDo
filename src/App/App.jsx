@@ -6,13 +6,13 @@ import TodoList from '../TodoList/TodoList';
 import Footer from '../Footer/Footer';
 
 import './App.css';
-import initialState from './initialState';
-import {onCheck, addItem, deleteItem, editItem, onEditSubmit, onFilter} from "./api";
+import {todos, filtersList} from '../InitialState/initialState';
+import {onCheck, deleteItem, editItem, onEditSubmit, onFilter} from "../Handlers/handlers";
 
 export default function App() {
-  const [quests, setQuests] = useState(initialState.quests);
-  const [filters, setFilters] = useState(initialState.filters);
-  const [activeFilter, setActiveFilter] = useState(initialState.activeFilter);
+  const [quests, setQuests] = useState(todos);
+  const [filters, setFilters] = useState(filtersList);
+  const [activeFilter, setActiveFilter] = useState("All");
 
   useEffect(() => {
     setQuests((Quest) => Quest.map((elem) => ({
@@ -33,8 +33,6 @@ export default function App() {
   }, [])
 
   const onCheckClick = (id) => onCheck(id, quests, setQuests);
-
-  const addTodoItem = (title) => addItem(title, setQuests);
 
   const deleteTodoItem = (id) => deleteItem(id, setQuests);
 
@@ -65,7 +63,7 @@ export default function App() {
 
   return (
     <section className="todoapp">
-      <Header addItem={addTodoItem}/>
+      <Header setQuests={setQuests}/>
       <section className="main">
         <TodoList
           quests={questsToRender}
