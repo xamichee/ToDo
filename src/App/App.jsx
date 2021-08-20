@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import React, { useState } from 'react';
 
 import Header from '../Header/Header';
 import TodoList from '../TodoList/TodoList';
@@ -13,24 +12,6 @@ export default function App() {
   const [quests, setQuests] = useState(todos);
   const [filters, setFilters] = useState(filtersList);
   const [activeFilter, setActiveFilter] = useState("All");
-
-  useEffect(() => {
-    setQuests((Quest) => Quest.map((elem) => ({
-        ...elem,
-        created: formatDistanceToNow(elem.date, {addSuffix: true, includeSeconds: true})
-      }))
-    );
-
-    const interval = setInterval(() => {
-      setQuests((Quest) => Quest.map((elem) => ({
-          ...elem,
-          created: formatDistanceToNow(elem.date, {addSuffix: true, includeSeconds: true})
-        }))
-      )
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [])
 
   const onCheckClick = (id) => onCheck(id, quests, setQuests);
 
