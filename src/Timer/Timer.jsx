@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import {getMinutes, getSeconds} from "date-fns";
 import './Timer.css'
 
-function Timer() {
+function Timer({done}) {
+
+  Timer.propTypes = {
+    done: PropTypes.bool.isRequired,
+  }
 
   const [timer, setTimer] = useState(0);
   const [timerColor, setTimerColor] = useState('black');
@@ -14,7 +19,7 @@ function Timer() {
   const secondsDraw = seconds < 10 ? `0${seconds}` : seconds;
 
   const timeGo = () => {
-    if (pause) {
+    if (pause && !done) {
       setTimerColor('red');
       setPause(false);
     }

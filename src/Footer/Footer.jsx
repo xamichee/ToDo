@@ -1,31 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import TasksFilter from '../TasksFilter/TasksFilter';
 import './Footer.css';
+import {filtersList} from "../InitialState/initialState";
+import {onFilter} from "../Handlers/handlers";
 
 export default function Footer(props) {
-  const {onFilter, onClearComplete, left, filters} = props;
+  const { quests, setQuests, setActiveFilter} = props;
 
-  Footer.defaultProps = {
-    onFilter: () => {
-    },
-    onClearComplete: () => {
-    },
-  };
+  const [filters, setFilters] = useState(filtersList);
 
   Footer.propTypes = {
-    onFilter: PropTypes.func,
-    onClearComplete: PropTypes.func,
-    left: PropTypes.number.isRequired,
-    filters: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setActiveFilter: PropTypes.func.isRequired,
+    quests: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setQuests: PropTypes.func.isRequired,
   };
+
+  const onClearComplete = () => {
+    setQuests(Quests => Quests.filter((elem) => !elem.done))
+  };
+
+  const left = quests.filter((elem) => !elem.done).length;
 
   return (
     <footer className="footer">
       <span className="todo-count">{left} items left</span>
       <ul className="filters">
         {filters.map((elem) => (
-          <TasksFilter key={elem.id} elem={elem} onFilter={onFilter}/>
+          <TasksFilter
+            key={elem.id}
+            elem={elem}
+            onFilter={event => onFilter(event, setActiveFilter, setFilters)}
+          />
         ))}
       </ul>
       <button type="button" className="clear-completed" onClick={onClearComplete}>

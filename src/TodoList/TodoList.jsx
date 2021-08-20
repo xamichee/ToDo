@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import {onCheck, deleteItem, editItem} from "../Handlers/handlers";
+import {onCheck, deleteItem, editItem, onEditSubmit} from "../Handlers/handlers";
 
 import './TodoList.css';
 
-export default function TodoList(props) {
-  TodoList.defaultProps = {
-    onEditSubmit: () => {
-    },
-  };
+export default function TodoList({quests, setQuests}) {
 
   TodoList.propTypes = {
     quests: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onEditSubmit: PropTypes.func,
     setQuests: PropTypes.func.isRequired,
   };
-
-  const {quests, onEditSubmit, setQuests} = props;
 
   return (
     <ul className="todo-list">
@@ -28,7 +21,7 @@ export default function TodoList(props) {
           onDelete={() => deleteItem(elem.id, setQuests)}
           onEdit={() => editItem(elem.id, setQuests)}
           onCheck={() => onCheck(elem.id, quests, setQuests)}
-          onEditSubmit={onEditSubmit}
+          onEditSubmit={(id, value) => onEditSubmit(id, value, setQuests)}
           setQuests={setQuests}
         />
       ))}

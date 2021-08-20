@@ -44,7 +44,7 @@ export default function TodoListItem({ onDelete, onEdit, onEditSubmit, quest, on
         <input className="toggle" type="checkbox" checked={!!done} onChange={toggleCheck}/>
         <label>
           <span className="title">{title}</span>
-          <Timer />
+          <Timer done={done}/>
           <ItemCreated date={date} />
         </label>
         <button aria-label="edit" type="button" className="icon icon-edit" onClick={onEdit}/>
