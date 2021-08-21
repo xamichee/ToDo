@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TasksFilter.css';
 
-export default function TasksFilter(props) {
-  const {elem, onFilter} = props;
-
-  TasksFilter.defaultProps = {
-    onFilter: () => {
-    },
-  };
+export default function TasksFilter({elem, onFilter}) {
 
   TasksFilter.propTypes = {
     elem: PropTypes.shape({
@@ -16,7 +10,7 @@ export default function TasksFilter(props) {
       name: PropTypes.string,
       className: PropTypes.string,
     }).isRequired,
-    onFilter: PropTypes.func,
+    onFilter: PropTypes.func.isRequired,
   };
 
   return (

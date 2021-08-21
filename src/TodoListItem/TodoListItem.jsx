@@ -5,7 +5,10 @@ import classNames from 'classnames';
 import Timer from "../Timer/Timer";
 import ItemCreated from "../ItemCreated/ItemCreated";
 
-export default function TodoListItem({ onDelete, onEdit, onEditSubmit, quest, onCheck }) {
+import {onCheck, deleteItem, editItem, onEditSubmit} from "../Handlers/handlers";
+
+
+export default function TodoListItem({ quest, quests, setQuests, isEditing, setIsEditing }) {
 
   const {title, id, done, date} = quest;
 
@@ -14,6 +17,7 @@ export default function TodoListItem({ onDelete, onEdit, onEditSubmit, quest, on
   const [label, setLabel] = useState(title);
 
   TodoListItem.propTypes = {
+    quests: PropTypes.arrayOf(PropTypes.object).isRequired,
     quest: PropTypes.shape({
       id: PropTypes.number,
       done: PropTypes.bool,
@@ -21,22 +25,28 @@ export default function TodoListItem({ onDelete, onEdit, onEditSubmit, quest, on
       className: PropTypes.string,
       date: PropTypes.number,
     }).isRequired,
-    onCheck: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onEditSubmit: PropTypes.func.isRequired,
+    setQuests: PropTypes.func.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    setIsEditing: PropTypes.func.isRequired,
   }
 
   const onLabelChange = (ev) => setLabel(ev.target.value);
 
   const toggleCheck = () => {
     // timePause();
-    onCheck();
+    onCheck(id, quests, setQuests)
   }
 
   className = classNames(className, {
     completed: done,
   });
+
+  const onEdit = () => {
+    if (!isEditing) {
+      setIsEditing(true);
+      editItem(id, setQuests);
+    }
+  }
 
   return (
     <li className={className}>
@@ -48,12 +58,13 @@ export default function TodoListItem({ onDelete, onEdit, onEditSubmit, quest, on
           <ItemCreated date={date} />
         </label>
         <button aria-label="edit" type="button" className="icon icon-edit" onClick={onEdit}/>
-        <button aria-label="delete" type="button" className="icon icon-destroy" onClick={onDelete}/>
+        <button aria-label="delete" type="button" className="icon icon-destroy" onClick={() => deleteItem(id, setQuests)}/>
       </div>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          onEditSubmit(id, label);
+          onEditSubmit(id, label, setQuests);
+          setIsEditing(false);
         }}
       >
         <input type="text" className="edit" defaultValue={title} onChange={onLabelChange}/>

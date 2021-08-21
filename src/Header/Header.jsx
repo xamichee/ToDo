@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import {addItem} from "../Handlers/handlers";
 import './Header.css';
 
-export default function Header(props) {
-  const {setQuests} = props;
+export default function Header({setQuests}) {
   const [label, setLabel] = useState('');
 
-  Header.defaultProps = {
-    setQuests: () => {
-    },
-  };
-
   Header.propTypes = {
-    setQuests: PropTypes.func,
+    setQuests: PropTypes.func.isRequired,
   }
 
   const addTodoItem = (title) => addItem(title, setQuests);

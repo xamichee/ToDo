@@ -5,9 +5,7 @@ import './Footer.css';
 import {filtersList} from "../InitialState/initialState";
 import {onFilter} from "../Handlers/handlers";
 
-export default function Footer(props) {
-  const { quests, setQuests, setActiveFilter} = props;
-
+export default function Footer({ quests, setQuests, setActiveFilter}) {
   const [filters, setFilters] = useState(filtersList);
 
   Footer.propTypes = {
