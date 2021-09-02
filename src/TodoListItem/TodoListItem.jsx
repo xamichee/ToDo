@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+
 import './TodoListItem.css';
 import classNames from 'classnames';
 import Timer from "../Timer/Timer";
@@ -7,14 +8,11 @@ import ItemCreated from "../ItemCreated/ItemCreated";
 
 import {onCheck, deleteItem, editItem, onEditSubmit} from "../Handlers/handlers";
 
-
-export default function TodoListItem({ quest, quests, setQuests, isEditing, setIsEditing }) {
+export default function TodoListItem({ quest, quests, setQuests, editingValue, setEditingValue }) {
 
   const {title, id, done, date} = quest;
 
   let {className} = quest;
-
-  const [label, setLabel] = useState(title);
 
   TodoListItem.propTypes = {
     quests: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -26,11 +24,14 @@ export default function TodoListItem({ quest, quests, setQuests, isEditing, setI
       date: PropTypes.number,
     }).isRequired,
     setQuests: PropTypes.func.isRequired,
-    isEditing: PropTypes.bool.isRequired,
-    setIsEditing: PropTypes.func.isRequired,
+    editingValue: PropTypes.string.isRequired,
+    setEditingValue: PropTypes.func.isRequired,
   }
 
-  const onLabelChange = (ev) => setLabel(ev.target.value);
+  function onLabelChange(ev) {
+    const {value} = ev.target;
+    setEditingValue(value);
+  }
 
   const toggleCheck = () => {
     // timePause();
@@ -42,11 +43,13 @@ export default function TodoListItem({ quest, quests, setQuests, isEditing, setI
   });
 
   const onEdit = () => {
-    if (!isEditing) {
-      setIsEditing(true);
+    if (!editingValue) {
+      setEditingValue(title);
       editItem(id, setQuests);
     }
   }
+
+  console.log(title);
 
   return (
     <li className={className}>
@@ -63,8 +66,8 @@ export default function TodoListItem({ quest, quests, setQuests, isEditing, setI
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          onEditSubmit(id, label, setQuests);
-          setIsEditing(false);
+          onEditSubmit(id, editingValue, '', setQuests);
+          setEditingValue('');
         }}
       >
         <input type="text" className="edit" defaultValue={title} onChange={onLabelChange}/>

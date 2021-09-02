@@ -36,20 +36,16 @@ export function editItem (id, callback)  {
   callback(Quest => {
     const idx = Quest.findIndex((el) => el.id === id);
     const newItem = { ...Quest[idx], className: 'editing' };
-
     return [...Quest.slice(0, idx), newItem, ...Quest.slice(idx + 1)]
   });
 }
 
-export function onEditSubmit (id, value, callback) {
+export function onEditSubmit (id, value, classname, callback) {
   callback(Quest => {
     const idx = Quest.findIndex((el) => el.id === id);
-    if (value) {
-      const newItem = { ...Quest[idx], title: value, className: '' };
-      return  [...Quest.slice(0, idx), newItem, ...Quest.slice(idx + 1)]
-    }
-    const oldItem = { ...Quest[idx], className: '' };
-    return [...Quest.slice(0, idx), oldItem, ...Quest.slice(idx + 1)]
+    const newItem = { ...Quest[idx], className: classname };
+    if (value) newItem.title = value;
+    return [...Quest.slice(0, idx), newItem, ...Quest.slice(idx + 1)]
   });
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import Header from '../Header/Header';
 import TodoList from '../TodoList/TodoList';
@@ -10,6 +10,7 @@ import {todos} from '../InitialState/initialState';
 export default function App() {
   const [quests, setQuests] = useState(todos);
   const [activeFilter, setActiveFilter] = useState("All");
+  const [editingValue, setEditingValue] = useState('');
 
   const questsToRender = quests.filter((elem) => {
     switch (activeFilter) {
@@ -26,11 +27,15 @@ export default function App() {
         <TodoList
           quests={questsToRender}
           setQuests={setQuests}
+          editingValue={editingValue}
+          setEditingValue={setEditingValue}
         />
         <Footer
           setActiveFilter={setActiveFilter}
           setQuests={setQuests}
           quests={quests}
+          editingValue={editingValue}
+          setEditingValue={setEditingValue}
         />
       </section>
     </section>
