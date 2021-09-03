@@ -1,43 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { connect } from "react-redux";
 
 import Header from '../Header/Header';
 import TodoList from '../TodoList/TodoList';
 import Footer from '../Footer/Footer';
 
 import './App.css';
-import {todos} from '../InitialState/initialState';
 
-export default function App() {
-  const [quests, setQuests] = useState(todos);
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [editingValue, setEditingValue] = useState('');
-
-  const questsToRender = quests.filter((elem) => {
-    switch (activeFilter) {
-      case 'Completed': return (elem.done)
-      case 'Active': return (!elem.done)
-      default: return true;
-    }
-  });
+function App() {
 
   return (
     <section className="todoapp">
-      <Header setQuests={setQuests}/>
+      <Header />
       <section className="main">
-        <TodoList
-          quests={questsToRender}
-          setQuests={setQuests}
-          editingValue={editingValue}
-          setEditingValue={setEditingValue}
-        />
-        <Footer
-          setActiveFilter={setActiveFilter}
-          setQuests={setQuests}
-          quests={quests}
-          editingValue={editingValue}
-          setEditingValue={setEditingValue}
-        />
+        <TodoList />
+        <Footer />
       </section>
     </section>
   );
-};
+}
+
+const mapStateToProps = state => ({
+  todos: state.todos
+})
+
+export default connect(mapStateToProps)(App);

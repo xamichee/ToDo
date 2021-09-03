@@ -1,29 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+
 import TodoListItem from '../TodoListItem/TodoListItem';
 
 import './TodoList.css';
 
-export default function TodoList({ quests, setQuests, editingValue, setEditingValue}) {
+function TodoList({ todos, activeFilter}) {
 
   TodoList.propTypes = {
-    quests: PropTypes.arrayOf(PropTypes.object).isRequired,
-    setQuests: PropTypes.func.isRequired,
-    editingValue: PropTypes.string.isRequired,
-    setEditingValue: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    activeFilter: PropTypes.string.isRequired,
   };
+
+  const questsToRender = todos.filter((elem) => {
+    switch (activeFilter) {
+      case 'Completed': return (elem.done)
+      case 'Active': return (!elem.done)
+      default: return true;
+    }
+  });
 
   return (
     <ul className="todo-list">
-      {quests.map((elem) => (
+      {questsToRender.map((elem) => (
         <TodoListItem
           key={elem.id}
           quest={elem}
-          quests={quests}
-          setQuests={setQuests}
-          editingValue={editingValue}
-          setEditingValue={setEditingValue}/>
+          quests={questsToRender}/>
       ))}
     </ul>
   );
 };
+
+const mapStateToProps = state => ({
+  todos: state.todos,
+  activeFilter: state.activeFilter,
+});
+
+export default connect(mapStateToProps)(TodoList)

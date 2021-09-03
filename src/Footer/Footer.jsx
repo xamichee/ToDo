@@ -1,24 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import TasksFilter from '../TasksFilter/TasksFilter';
-import './Footer.css';
-import {filtersList} from "../InitialState/initialState";
-import {onFilter} from "../Handlers/handlers";
 
-export default function Footer({ quests, setQuests, setActiveFilter}) {
-  const [filters, setFilters] = useState(filtersList);
+import { clearComplete, setFilter } from "../redux/store.actions";
+import './Footer.css';
+
+function Footer({ todos, clearComplete: onClearComplete, filters, setFilter: onFilter }) {
 
   Footer.propTypes = {
-    setActiveFilter: PropTypes.func.isRequired,
-    quests: PropTypes.arrayOf(PropTypes.object).isRequired,
-    setQuests: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    clearComplete: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
+    filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
-  const onClearComplete = () => {
-    setQuests(Quests => Quests.filter((elem) => !elem.done))
-  };
-
-  const left = quests.filter((elem) => !elem.done).length;
+  const left = todos.filter((elem) => !elem.done).length;
 
   return (
     <footer className="footer">
@@ -28,7 +25,7 @@ export default function Footer({ quests, setQuests, setActiveFilter}) {
           <TasksFilter
             key={elem.id}
             elem={elem}
-            onFilter={event => onFilter(event, setActiveFilter, setFilters)}
+            onFilter={event => onFilter(event)}
           />
         ))}
       </ul>
@@ -37,4 +34,16 @@ export default function Footer({ quests, setQuests, setActiveFilter}) {
       </button>
     </footer>
   );
-};
+}
+
+const mapStateToProps = state => ({
+  todos: state.todos,
+  filters: state.filtersList,
+});
+
+const mapDispatchToProps = dispatch => ({
+  clearComplete: () => dispatch(clearComplete()),
+  setFilter: event => dispatch(setFilter(event))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);
