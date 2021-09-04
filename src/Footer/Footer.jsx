@@ -7,14 +7,14 @@ import { clearComplete, setFilter, editSubmit } from "../redux/store.actions";
 
 import './Footer.css';
 
-function Footer({ todos, filters, clearComplete: onClearComplete, setFilter: onFilter,editingValue, editingId, editSubmit: editSubmitTodo }) {
+function Footer({ todos, filtersList, clearComplete: onClearComplete, setFilter: onFilter, editingValue, editingId, editSubmit: editSubmitTodo }) {
 
   Footer.propTypes = {
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     clearComplete: PropTypes.func.isRequired,
     setFilter: PropTypes.func.isRequired,
     editSubmit: PropTypes.func.isRequired,
-    filters: PropTypes.arrayOf(PropTypes.object).isRequired,
+    filtersList: PropTypes.arrayOf(PropTypes.object).isRequired,
     editingValue: PropTypes.string.isRequired,
     editingId: PropTypes.string.isRequired
   };
@@ -25,7 +25,7 @@ function Footer({ todos, filters, clearComplete: onClearComplete, setFilter: onF
     <footer className="footer">
       <span className="todo-count">{left} items left</span>
       <ul className="filters">
-        {filters.map((elem) => (
+        {filtersList.map((elem) => (
           <TasksFilter
             key={elem.id}
             elem={elem}
@@ -45,11 +45,11 @@ function Footer({ todos, filters, clearComplete: onClearComplete, setFilter: onF
   );
 }
 
-const mapStateToProps = state => ({
-  todos: state.todos,
-  filters: state.filtersList,
-  editingValue: state.editingValue,
-  editingId: state.editingId,
+const mapStateToProps = ({ todos, filtersList, editingValue, editingId }) => ({
+  todos,
+  filtersList,
+  editingValue,
+  editingId,
 });
 
 const mapDispatchToProps = dispatch => ({

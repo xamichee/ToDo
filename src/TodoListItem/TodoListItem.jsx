@@ -77,8 +77,6 @@ const mapDispatchToProps = dispatch => ({
   checkItemDone: id => dispatch(checkItemDone(id))
 });
 
-const mapStateToProps = store => ({
-  editingValue: store.editingValue
-})
+const mapStateToProps = ({ editingValue }) => ({ editingValue })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoListItem);

@@ -1,18 +1,19 @@
 import initialState from "../InitialState/initialState";
+import actionTypes from "./action.types";
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case actionTypes.ADD_TODO:
       return {
         ...state,
         todos: [...state.todos, action.payload]
       }
-    case 'REMOVE_TODO':
+    case actionTypes.REMOVE_TODO:
       return {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.payload)
       }
-    case 'EDIT_TODO':
+    case actionTypes.EDIT_TODO:
       return {
         ...state,
         todos: state.todos.map(todo => todo.id === action.payload.id ?
@@ -20,30 +21,30 @@ const reducer = (state = initialState, action) => {
         editingValue: action.payload.value,
         editingId: action.payload.id,
       }
-    case 'EDIT_SUBMIT':
+    case actionTypes.EDIT_SUBMIT:
       return {
         ...state,
         todos: state.todos.map(todo => todo.id === action.payload.id ?
           {...todo, title: action.payload.value, className: ''} : todo ),
         editingValue: ''
       }
-    case 'EDIT_CHANGE':
+    case actionTypes.EDIT_CHANGE:
       return {
         ...state,
         editingValue: action.payload
       }
-    case 'CHECK_ITEM_DONE':
+    case actionTypes.CHECK_ITEM_DONE:
       return {
         ...state,
         todos: state.todos.map(todo => todo.id === action.payload ?
           {...todo, done: !todo.done} : todo ),
       }
-    case 'CLEAR_COMPLETE':
+    case actionTypes.CLEAR_COMPLETE:
       return {
         ...state,
         todos: state.todos.filter(todo => !todo.done)
       }
-    case 'SET_FILTER':
+    case actionTypes.SET_FILTER:
       return {
         ...state,
         activeFilter: action.payload,
