@@ -11,6 +11,7 @@ const initialState = {
   ],
   activeFilter: 'All',
   editingValue: '',
+  editingId: '',
 }
 
 export default initialState;

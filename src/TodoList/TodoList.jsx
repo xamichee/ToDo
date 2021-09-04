@@ -26,12 +26,11 @@ function TodoList({ todos, activeFilter}) {
       {questsToRender.map((elem) => (
         <TodoListItem
           key={elem.id}
-          quest={elem}
-          quests={questsToRender}/>
+          quest={elem} />
       ))}
     </ul>
   );
-};
+}
 
 const mapStateToProps = state => ({
   todos: state.todos,

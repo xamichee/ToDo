@@ -18,6 +18,7 @@ const reducer = (state = initialState, action) => {
         todos: state.todos.map(todo => todo.id === action.payload.id ?
           {...todo, className: 'editing'} : todo ),
         editingValue: action.payload.value,
+        editingId: action.payload.id,
       }
     case 'EDIT_SUBMIT':
       return {
