@@ -1,22 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 
-import {removeTodo, editTodo, editSubmit, editChange, checkItemDone} from "../redux/store.actions";
+import { removeTodo, editTodo, editSubmit, editChange, checkItemDone } from '../redux/store.actions';
 
 import './TodoListItem.css';
-import Timer from "../Timer/Timer";
-import ItemCreated from "../ItemCreated/ItemCreated";
+import Timer from '../Timer/Timer';
+import ItemCreated from '../ItemCreated/ItemCreated';
 
 function TodoListItem({
-                        quest, editingValue, editChange: onChange, checkItemDone: toggleCheck,
-                        editSubmit: editSubmitTodo, removeTodo: removeTodoItem, editTodo: editTodoItem
-                      }) {
+  quest,
+  editingValue,
+  editChange: onChange,
+  checkItemDone: toggleCheck,
+  editSubmit: editSubmitTodo,
+  removeTodo: removeTodoItem,
+  editTodo: editTodoItem,
+}) {
+  const { title, id, done, date } = quest;
 
-  const {title, id, done, date} = quest;
-
-  let {className} = quest;
+  let { className } = quest;
 
   TodoListItem.propTypes = {
     quest: PropTypes.shape({
@@ -32,7 +36,7 @@ function TodoListItem({
     editSubmit: PropTypes.func.isRequired,
     editChange: PropTypes.func.isRequired,
     checkItemDone: PropTypes.func.isRequired,
-  }
+  };
 
   className = classNames(className, {
     completed: done,
@@ -42,41 +46,45 @@ function TodoListItem({
     if (!editingValue) {
       editTodoItem(id, title);
     }
-  }
+  };
 
   return (
     <li className={className}>
       <div className="view">
-        <input className="toggle" type="checkbox" checked={!!done} onChange={() => toggleCheck(id)}/>
+        <input className="toggle" type="checkbox" checked={!!done} onChange={() => toggleCheck(id)} />
         <div className="label">
           <span className="title">{title}</span>
-          <Timer done={done}/>
-          <ItemCreated date={date}/>
+          <Timer done={done} />
+          <ItemCreated date={date} />
         </div>
-        <button aria-label="edit" type="button" className="icon icon-edit" onClick={onEdit}/>
-        <button aria-label="delete" type="button" className="icon icon-destroy" onClick={() => removeTodoItem(id)}/>
+        <button aria-label="edit" type="button" className="icon icon-edit" onClick={onEdit} />
+        <button aria-label="delete" type="button" className="icon icon-destroy" onClick={() => removeTodoItem(id)} />
       </div>
-      <form onSubmit={(event) => {
-        event.preventDefault();
-        editSubmitTodo(id, editingValue);
-      }}>
-        <input type="text"
-               className="edit"
-               defaultValue={title}
-               onChange={({target: {value}}) => onChange(value)}/>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          editSubmitTodo(id, editingValue);
+        }}
+      >
+        <input
+          type="text"
+          className="edit"
+          defaultValue={title}
+          onChange={({ target: { value } }) => onChange(value)}
+        />
       </form>
     </li>
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  removeTodo: id => dispatch(removeTodo(id)),
+const mapDispatchToProps = (dispatch) => ({
+  removeTodo: (id) => dispatch(removeTodo(id)),
   editTodo: (id, value) => dispatch(editTodo(id, value)),
   editSubmit: (id, value) => dispatch(editSubmit(id, value)),
-  editChange: value => dispatch(editChange(value)),
-  checkItemDone: id => dispatch(checkItemDone(id))
+  editChange: (value) => dispatch(editChange(value)),
+  checkItemDone: (id) => dispatch(checkItemDone(id)),
 });
 
-const mapStateToProps = ({ editingValue }) => ({ editingValue })
+const mapStateToProps = ({ editingValue }) => ({ editingValue });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoListItem);

@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TasksFilter.css';
 
-export default function TasksFilter({elem, onFilter}) {
-
+export default function TasksFilter({ elem, onFilter }) {
   TasksFilter.propTypes = {
     elem: PropTypes.shape({
       id: PropTypes.number,
@@ -20,4 +19,4 @@ export default function TasksFilter({elem, onFilter}) {
       </button>
     </li>
   );
-};
+}

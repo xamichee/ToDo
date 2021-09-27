@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 import TasksFilter from '../TasksFilter/TasksFilter';
-import { clearComplete, setFilter, editSubmit } from "../redux/store.actions";
+import { clearComplete, setFilter, editSubmit } from '../redux/store.actions';
 
 import './Footer.css';
 
-function Footer({ todos, filtersList, clearComplete: onClearComplete, setFilter: onFilter, editingValue, editingId, editSubmit: editSubmitTodo }) {
-
+function Footer({
+  todos,
+  filtersList,
+  clearComplete: onClearComplete,
+  setFilter: onFilter,
+  editingValue,
+  editingId,
+  editSubmit: editSubmitTodo,
+}) {
   Footer.propTypes = {
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     clearComplete: PropTypes.func.isRequired,
@@ -16,7 +23,7 @@ function Footer({ todos, filtersList, clearComplete: onClearComplete, setFilter:
     editSubmit: PropTypes.func.isRequired,
     filtersList: PropTypes.arrayOf(PropTypes.object).isRequired,
     editingValue: PropTypes.string.isRequired,
-    editingId: PropTypes.string.isRequired
+    editingId: PropTypes.string.isRequired,
   };
 
   const left = todos.filter((elem) => !elem.done).length;
@@ -29,11 +36,11 @@ function Footer({ todos, filtersList, clearComplete: onClearComplete, setFilter:
           <TasksFilter
             key={elem.id}
             elem={elem}
-            onFilter={event => {
+            onFilter={(event) => {
               if (editingValue) {
                 editSubmitTodo(editingId, editingValue);
               }
-              onFilter(event)
+              onFilter(event);
             }}
           />
         ))}
@@ -52,10 +59,10 @@ const mapStateToProps = ({ todos, filtersList, editingValue, editingId }) => ({
   editingId,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearComplete: () => dispatch(clearComplete()),
-  setFilter: event => dispatch(setFilter(event)),
+  setFilter: (event) => dispatch(setFilter(event)),
   editSubmit: (id, value) => dispatch(editSubmit(id, value)),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

@@ -7,7 +7,6 @@ import Footer from '../Footer/Footer';
 import './App.css';
 
 export default function App() {
-
   return (
     <section className="todoapp">
       <Header />
@@ -17,5 +16,4 @@ export default function App() {
       </section>
     </section>
   );
-};
-
+}
