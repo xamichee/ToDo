@@ -5,7 +5,7 @@ import { addTodo } from '../redux/store.actions';
 
 import './Header.css';
 
-function Header({ addTodo: addTodoItem }) {
+function Header({addTodo: addTodoItem}) {
   const [label, setLabel] = useState('');
 
   Header.propTypes = {
@@ -36,8 +36,6 @@ function Header({ addTodo: addTodoItem }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addTodo: (title) => dispatch(addTodo(title)),
-});
+const mapDispatchToProps = ({addTodo});
 
 export default connect(null, mapDispatchToProps)(Header);

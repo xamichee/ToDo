@@ -8,14 +8,14 @@ import { clearComplete, setFilter, editSubmit } from '../redux/store.actions';
 import './Footer.css';
 
 function Footer({
-  todos,
-  filtersList,
-  clearComplete: onClearComplete,
-  setFilter: onFilter,
-  editingValue,
-  editingId,
-  editSubmit: editSubmitTodo,
-}) {
+                  todos,
+                  filtersList,
+                  clearComplete: onClearComplete,
+                  setFilter: onFilter,
+                  editingValue,
+                  editingId,
+                  editSubmit: editSubmitTodo,
+                }) {
   Footer.propTypes = {
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     clearComplete: PropTypes.func.isRequired,
@@ -52,17 +52,13 @@ function Footer({
   );
 }
 
-const mapStateToProps = ({ todos, filtersList, editingValue, editingId }) => ({
+const mapStateToProps = ({todos, filtersList, editingValue, editingId}) => ({
   todos,
   filtersList,
   editingValue,
   editingId,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  clearComplete: () => dispatch(clearComplete()),
-  setFilter: (event) => dispatch(setFilter(event)),
-  editSubmit: (id, value) => dispatch(editSubmit(id, value)),
-});
+const mapDispatchToProps = ({clearComplete, setFilter, editSubmit});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);
