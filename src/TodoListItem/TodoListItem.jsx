@@ -22,22 +22,6 @@ function TodoListItem({
 
   let {className} = quest;
 
-  TodoListItem.propTypes = {
-    quest: PropTypes.shape({
-      id: PropTypes.string,
-      done: PropTypes.bool,
-      title: PropTypes.string,
-      className: PropTypes.string,
-      date: PropTypes.number,
-    }).isRequired,
-    editingValue: PropTypes.string.isRequired,
-    removeTodo: PropTypes.func.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    editSubmit: PropTypes.func.isRequired,
-    editChange: PropTypes.func.isRequired,
-    checkItemDone: PropTypes.func.isRequired,
-  };
-
   className = classNames(className, {
     completed: done,
   });
@@ -82,3 +66,19 @@ const mapDispatchToProps = ({removeTodo, editTodo, editSubmit, editChange, check
 const mapStateToProps = ({editingValue}) => ({editingValue});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoListItem);
+
+TodoListItem.propTypes = {
+  quest: PropTypes.shape({
+    id: PropTypes.string,
+    done: PropTypes.bool,
+    title: PropTypes.string,
+    className: PropTypes.string,
+    date: PropTypes.number,
+  }).isRequired,
+  editingValue: PropTypes.string.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
+  editSubmit: PropTypes.func.isRequired,
+  editChange: PropTypes.func.isRequired,
+  checkItemDone: PropTypes.func.isRequired,
+};

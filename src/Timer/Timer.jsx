@@ -4,9 +4,6 @@ import { getMinutes, getSeconds } from 'date-fns';
 import './Timer.css';
 
 function Timer({ done }) {
-  Timer.propTypes = {
-    done: PropTypes.bool.isRequired,
-  };
 
   const [timer, setTimer] = useState(0);
   const [timerColor, setTimerColor] = useState('black');
@@ -58,3 +55,7 @@ function Timer({ done }) {
 }
 
 export default Timer;
+
+Timer.propTypes = {
+  done: PropTypes.bool.isRequired,
+};

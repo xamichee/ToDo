@@ -7,10 +7,6 @@ import TodoListItem from '../TodoListItem/TodoListItem';
 import './TodoList.css';
 
 function TodoList({ todos, activeFilter }) {
-  TodoList.propTypes = {
-    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-    activeFilter: PropTypes.string.isRequired,
-  };
 
   const questsToRender = todos.filter((elem) => {
     switch (activeFilter) {
@@ -35,3 +31,8 @@ function TodoList({ todos, activeFilter }) {
 const mapStateToProps = ({ todos, activeFilter }) => ({ todos, activeFilter });
 
 export default connect(mapStateToProps)(TodoList);
+
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  activeFilter: PropTypes.string.isRequired,
+};

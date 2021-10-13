@@ -16,15 +16,6 @@ function Footer({
                   editingId,
                   editSubmit: editSubmitTodo,
                 }) {
-  Footer.propTypes = {
-    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-    clearComplete: PropTypes.func.isRequired,
-    setFilter: PropTypes.func.isRequired,
-    editSubmit: PropTypes.func.isRequired,
-    filtersList: PropTypes.arrayOf(PropTypes.object).isRequired,
-    editingValue: PropTypes.string.isRequired,
-    editingId: PropTypes.string.isRequired,
-  };
 
   const left = todos.filter((elem) => !elem.done).length;
 
@@ -62,3 +53,13 @@ const mapStateToProps = ({todos, filtersList, editingValue, editingId}) => ({
 const mapDispatchToProps = ({clearComplete, setFilter, editSubmit});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+
+Footer.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  clearComplete: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  editSubmit: PropTypes.func.isRequired,
+  filtersList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editingValue: PropTypes.string.isRequired,
+  editingId: PropTypes.string.isRequired,
+};

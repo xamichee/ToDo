@@ -5,12 +5,8 @@ import { addTodo } from '../redux/store.actions';
 
 import './Header.css';
 
-function Header({addTodo: addTodoItem}) {
+function Header({dispatch}) {
   const [label, setLabel] = useState('');
-
-  Header.propTypes = {
-    addTodo: PropTypes.func.isRequired,
-  };
 
   const onLabelChange = (ev) => setLabel(ev.target.value);
 
@@ -20,7 +16,7 @@ function Header({addTodo: addTodoItem}) {
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
-          addTodoItem(label);
+          dispatch(addTodo(label));
           setLabel('');
         }}
       >
@@ -36,6 +32,8 @@ function Header({addTodo: addTodoItem}) {
   );
 }
 
-const mapDispatchToProps = ({addTodo});
+export default connect()(Header);
 
-export default connect(null, mapDispatchToProps)(Header);
+Header.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
