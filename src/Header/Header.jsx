@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addTodo } from '../redux/store.actions';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../redux/todo.slice';
 
 import './Header.css';
 
-function Header({dispatch}) {
+function Header() {
   const [label, setLabel] = useState('');
+  const dispatch = useDispatch();
 
   const onLabelChange = (ev) => setLabel(ev.target.value);
 
@@ -32,8 +32,5 @@ function Header({dispatch}) {
   );
 }
 
-export default connect()(Header);
+export default Header;
 
-Header.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};

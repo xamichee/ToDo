@@ -1,4 +1,4 @@
-const initialState = {
+const todoList = {
   todos: [
     {id: '1', done: false, title: 'Пункт 1', className: '', date: Date.now(), created: null},
     {id: '2', done: false, title: 'Пункт 2', className: '', date: Date.now(), created: null},
@@ -14,4 +14,4 @@ const initialState = {
   editingId: '',
 }
 
-export default initialState;
+export default todoList;

@@ -9,6 +9,8 @@ import './TodoList.css';
 
 function TodoList({ todos }) {
 
+  console.log(todos)
+
   return (
     <ul className="todo-list">
       {todos.map((elem) => (

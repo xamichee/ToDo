@@ -1,24 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
-import { removeTodo, editTodo, editSubmit, editChange, checkItemDone } from '../redux/store.actions';
+import { removeTodo, editTodo, editSubmit, editChange, checkItemDone } from '../redux/todo.slice';
 
 import './TodoListItem.css';
 import Timer from '../Timer/Timer';
 import ItemCreated from '../ItemCreated/ItemCreated';
 
-function TodoListItem({
-                        quest,
-                        editingValue,
-                        editChange: onChange,
-                        checkItemDone: toggleCheck,
-                        editSubmit: editSubmitTodo,
-                        removeTodo: removeTodoItem,
-                        editTodo: editTodoItem,
-                      }) {
+function TodoListItem({ quest, editingValue }) {
   const {title, id, done, date} = quest;
+  const dispatch = useDispatch();
 
   let {className} = quest;
 
@@ -28,33 +21,33 @@ function TodoListItem({
 
   const onEdit = () => {
     if (!editingValue) {
-      editTodoItem(id, title);
+      dispatch(editTodo(id, title));
     }
   };
 
   return (
     <li className={className}>
       <div className="view">
-        <input className="toggle" type="checkbox" checked={!!done} onChange={() => toggleCheck(id)}/>
+        <input className="toggle" type="checkbox" checked={!!done} onChange={() => dispatch(checkItemDone(id))}/>
         <div className="label">
           <span className="title">{title}</span>
           <Timer done={done}/>
           <ItemCreated date={date}/>
         </div>
         <button aria-label="edit" type="button" className="icon icon-edit" onClick={onEdit}/>
-        <button aria-label="delete" type="button" className="icon icon-destroy" onClick={() => removeTodoItem(id)}/>
+        <button aria-label="delete" type="button" className="icon icon-destroy" onClick={() => dispatch(removeTodo(id))}/>
       </div>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          editSubmitTodo(id, editingValue);
+          dispatch(editSubmit(id, editingValue));
         }}
       >
         <input
           type="text"
           className="edit"
           defaultValue={title}
-          onChange={({target: {value}}) => onChange(value)}
+          onChange={({target: {value}}) => dispatch(editChange(value))}
         />
       </form>
     </li>
@@ -75,10 +68,5 @@ TodoListItem.propTypes = {
     className: PropTypes.string,
     date: PropTypes.number,
   }).isRequired,
-  editingValue: PropTypes.string.isRequired,
-  removeTodo: PropTypes.func.isRequired,
-  editTodo: PropTypes.func.isRequired,
-  editSubmit: PropTypes.func.isRequired,
-  editChange: PropTypes.func.isRequired,
-  checkItemDone: PropTypes.func.isRequired,
+  editingValue: PropTypes.string.isRequired
 };

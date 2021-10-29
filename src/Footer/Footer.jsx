@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import TasksFilter from '../TasksFilter/TasksFilter';
-import { clearComplete, setFilter, editSubmit } from '../redux/store.actions';
+import { clearComplete, setFilter, editSubmit } from '../redux/todo.slice';
 
 import './Footer.css';
 
-function Footer({
-                  todos,
-                  filtersList,
-                  clearComplete: onClearComplete,
-                  setFilter: onFilter,
-                  editingValue,
-                  editingId,
-                  editSubmit: editSubmitTodo,
-                }) {
+function Footer({ todos, filtersList, editingValue, editingId, }) {
+  const dispatch = useDispatch();
 
   const left = todos.filter((elem) => !elem.done).length;
 
@@ -29,36 +22,26 @@ function Footer({
             elem={elem}
             onFilter={(event) => {
               if (editingValue) {
-                editSubmitTodo(editingId, editingValue);
+                dispatch(editSubmit(editingId, editingValue));
               }
-              onFilter(event);
+              dispatch(setFilter(event));
             }}
           />
         ))}
       </ul>
-      <button type="button" className="clear-completed" onClick={onClearComplete}>
+      <button type="button" className="clear-completed" onClick={dispatch(clearComplete)}>
         Clear completed
       </button>
     </footer>
   );
 }
 
-const mapStateToProps = ({todos, filtersList, editingValue, editingId}) => ({
-  todos,
-  filtersList,
-  editingValue,
-  editingId,
-});
+const mapStateToProps = ({todos}) => ({...todos});
 
-const mapDispatchToProps = ({clearComplete, setFilter, editSubmit});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default connect(mapStateToProps)(Footer);
 
 Footer.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  clearComplete: PropTypes.func.isRequired,
-  setFilter: PropTypes.func.isRequired,
-  editSubmit: PropTypes.func.isRequired,
   filtersList: PropTypes.arrayOf(PropTypes.object).isRequired,
   editingValue: PropTypes.string.isRequired,
   editingId: PropTypes.string.isRequired,
