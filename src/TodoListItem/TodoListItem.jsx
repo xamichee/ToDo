@@ -24,7 +24,6 @@ function TodoListItem({ quest }) {
 
   const onEdit = () => {
     if (!editingValue) {
-      console.log(id, title)
       dispatch(editTodo({id, title}));
     }
   };

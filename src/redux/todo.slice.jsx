@@ -30,7 +30,6 @@ const todoSlice = createSlice({
         {...todo, className: 'editing'} : todo);
       state.editingValue = value;
       state.editingId = id;
-      console.log(state.todos);
     },
 
     editChange(state, action) {
