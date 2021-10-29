@@ -2,25 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import nextId from "react-id-generator";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
-// import todoList from "../InitialState/initialState";
+import initialState from "../InitialState/initialState";
 
 const todoSlice = createSlice({
   name: 'todos',
-  initialState: {
-    todos: [
-      {id: '1', done: false, title: 'Пункт 1', className: '', date: Date.now(), created: null},
-      {id: '2', done: false, title: 'Пункт 2', className: '', date: Date.now(), created: null},
-      {id: '3', done: false, title: 'Пункт 3', className: '', date: Date.now(), created: null},
-    ],
-    filtersList: [
-      {id: 1, name: 'All', className: 'selected'},
-      {id: 2, name: 'Active', className: ''},
-      {id: 3, name: 'Completed', className: ''},
-    ],
-    activeFilter: 'All',
-    editingValue: '',
-    editingId: '',
-  },
+  initialState,
   reducers: {
 
     addTodo(state, action) {
@@ -39,19 +25,22 @@ const todoSlice = createSlice({
     },
 
     editTodo(state, action) {
-      state.todos = state.todos.map(todo => todo.id === action.payload.id ?
-        {...todo, className: 'editing'} : todo)
-      state.editingValue = action.payload.value
-      state.editingId = action.payload.id
+      const {id, value} = action.payload;
+      state.todos = state.todos.map(todo => todo.id === id ?
+        {...todo, className: 'editing'} : todo);
+      state.editingValue = value;
+      state.editingId = id;
+      console.log(state.todos);
     },
 
-    editChange(state, {payload}) {
-      state.editingValue = payload
+    editChange(state, action) {
+      state.editingValue = action.payload
     },
 
     editSubmit(state, action) {
-      state.todos = state.todos.map(todo => todo.id === action.payload.id ?
-        {...todo, title: action.payload.value, className: ''} : todo)
+      const {id, editingValue} = action.payload;
+      state.todos = state.todos.map(todo => todo.id === id ?
+        {...todo, title: editingValue, className: ''} : todo)
       state.editingValue = ''
     },
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { removeTodo, editTodo, editSubmit, editChange, checkItemDone } from '../redux/todo.slice';
 
@@ -9,7 +9,10 @@ import './TodoListItem.css';
 import Timer from '../Timer/Timer';
 import ItemCreated from '../ItemCreated/ItemCreated';
 
-function TodoListItem({ quest, editingValue }) {
+function TodoListItem({ quest }) {
+
+  const {editingValue} = useSelector(state => state.todos);
+
   const {title, id, done, date} = quest;
   const dispatch = useDispatch();
 
@@ -21,7 +24,8 @@ function TodoListItem({ quest, editingValue }) {
 
   const onEdit = () => {
     if (!editingValue) {
-      dispatch(editTodo(id, title));
+      console.log(id, title)
+      dispatch(editTodo({id, title}));
     }
   };
 
@@ -40,7 +44,7 @@ function TodoListItem({ quest, editingValue }) {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          dispatch(editSubmit(id, editingValue));
+          dispatch(editSubmit({id, editingValue}));
         }}
       >
         <input
@@ -54,11 +58,7 @@ function TodoListItem({ quest, editingValue }) {
   );
 }
 
-const mapDispatchToProps = ({removeTodo, editTodo, editSubmit, editChange, checkItemDone});
-
-const mapStateToProps = ({editingValue}) => ({editingValue});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoListItem);
+export default TodoListItem;
 
 TodoListItem.propTypes = {
   quest: PropTypes.shape({
@@ -68,5 +68,4 @@ TodoListItem.propTypes = {
     className: PropTypes.string,
     date: PropTypes.number,
   }).isRequired,
-  editingValue: PropTypes.string.isRequired
 };

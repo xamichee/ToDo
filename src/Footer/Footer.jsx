@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import TasksFilter from '../TasksFilter/TasksFilter';
 import { clearComplete, setFilter, editSubmit } from '../redux/todo.slice';
 
 import './Footer.css';
 
-function Footer({ todos, filtersList, editingValue, editingId, }) {
+function Footer() {
   const dispatch = useDispatch();
+  const {todos, filtersList, editingValue, editingId} = useSelector(state => state.todos);
 
   const left = todos.filter((elem) => !elem.done).length;
 
@@ -22,27 +22,18 @@ function Footer({ todos, filtersList, editingValue, editingId, }) {
             elem={elem}
             onFilter={(event) => {
               if (editingValue) {
-                dispatch(editSubmit(editingId, editingValue));
+                dispatch(editSubmit({id: editingId, editingValue}));
               }
-              dispatch(setFilter(event));
+              dispatch(setFilter(event.target.textContent));
             }}
           />
         ))}
       </ul>
-      <button type="button" className="clear-completed" onClick={dispatch(clearComplete)}>
+      <button type="button" className="clear-completed" onClick={() => dispatch(clearComplete())}>
         Clear completed
       </button>
     </footer>
   );
 }
 
-const mapStateToProps = ({todos}) => ({...todos});
-
-export default connect(mapStateToProps)(Footer);
-
-Footer.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filtersList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  editingValue: PropTypes.string.isRequired,
-  editingId: PropTypes.string.isRequired,
-};
+export default Footer;
